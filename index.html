@@ -21,7 +21,7 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AVIA - Audio Video Image Analyzer</title>
+    <title>AVIA - Audio Video Image Analyzer Waitlist</title>
     
     <!-- SEO Meta Tags -->
     <meta name="description" content="AVIA offers powerful tools for uploading, organizing, and analyzing your audio, video, and image content effortlessly. Join our waitlist for early access!">
@@ -30,7 +30,7 @@
     <meta property="og:title" content="AVIA - Audio Video Image Analyzer">
     <meta property="og:description" content="Powerful tools for uploading, organizing, and analyzing your media files.">
     <meta property="og:image" content="https://exploreavia.com/images/og-image.jpg">
-    <meta property="og:url" content="https://exploreavia.com">
+    <meta property="og:url" content="https://www.exploreavia.com">
     <meta property="og:type" content="website">
     
     <!-- Twitter Card Meta Tags -->
@@ -41,9 +41,10 @@
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for Icons (optional if using images) -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     
+    <!-- Font Awesome CSS CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
       /* Ensure all variant forms and incentives are hidden by default */
       .variant, .form, .incentive, .illustration {
@@ -165,7 +166,7 @@
         <!-- Forms Variations -->
         <!-- Variant A: Simple Form -->
         <div class="form form-a">
-          <form id="waitlist-form-a" class="space-y-4">
+          <form id="waitlist-form-a" class="space-y-4" action="YOUR_WEB_APP_URL_HERE" method="POST">
             <input type="text" id="name-a" name="name" placeholder="Your Name" required
               class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Your Name">
             
@@ -181,7 +182,7 @@
         
         <!-- Variant B: Detailed Form -->
         <div class="form form-b">
-          <form id="waitlist-form-b" class="space-y-4">
+          <form id="waitlist-form-b" class="space-y-4" action="https://script.google.com/macros/s/AKfycbw9YJAlC2yFqxdNFU54OwOJ6ZrnngqmLhEkFRpNpJkDQiOt4URxWCWl2ZaprJbMUMwf/exec" method="POST">
             <input type="text" id="name-b" name="name" placeholder="Your Name" required
               class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Your Name">
             
@@ -209,7 +210,7 @@
         
         <!-- Variant C: Minimalist Form -->
         <div class="form form-c">
-          <form id="waitlist-form-c" class="space-y-4">
+          <form id="waitlist-form-c" class="space-y-4" action="YOUR_WEB_APP_URL_HERE" method="POST">
             <input type="email" id="email-c" name="email" placeholder="you@example.com" required
               class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Your Email">
             
@@ -260,7 +261,7 @@
   </footer>
 
   <!-- JavaScript -->
-  <!-- <script>
+  <script>
     // Set current year in footer
     document.getElementById('current-year').textContent = new Date().getFullYear();
 
@@ -338,55 +339,9 @@
       }
 
       // Send variant assignment to GA
-      gtag('event', 'variant_assigned', {
-        'variant': variant.toUpperCase()
-      });
-    }
-
-    // Function to handle form submission via AJAX
-    function handleFormSubmit(formId, variantLabel) {
-      const form = document.getElementById(formId);
-      if (form) {
-        form.addEventListener('submit', function(event) {
-          event.preventDefault(); // Prevent default form submission
-
-          // Collect form data
-          const formData = new FormData(form);
-          const data = {};
-          formData.forEach((value, key) => {
-            data[key] = value;
-          });
-// Add the secret token
-data.token = 'MY_SECRET_TOKEN_12345'; // Replace with your actual secret token
-          // Send form data via Fetch API (AJAX)
-          fetch('https://script.google.com/macros/s/AKfycbw9YJAlC2yFqxdNFU54OwOJ6ZrnngqmLhEkFRpNpJkDQiOt4URxWCWl2ZaprJbMUMwf/exec', { // Replace with your actual endpoint
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-          })
-          .then(response => {
-            if (response.ok) {
-              // Success: Show success message
-              document.getElementById('form-message').classList.remove('hidden');
-              // Hide the form after submission
-              form.classList.add('hidden');
-              // Track form submission in GA
-              gtag('event', 'form_submit', {
-                'event_category': 'Waitlist Form',
-                'event_label': `Variant ${variantLabel} Form Submit`,
-                'value': 1
-              });
-            } else {
-              // Error: Show error message
-              alert('There was an error submitting your form. Please try again later.');
-            }
-          })
-          .catch(error => {
-            console.error('Error submitting form:', error);
-            alert('There was an error submitting your form. Please try again later.');
-          });
+      if (typeof gtag === 'function') {
+        gtag('event', 'variant_assigned', {
+          'variant': variant.toUpperCase()
         });
       }
     }
@@ -403,177 +358,16 @@ data.token = 'MY_SECRET_TOKEN_12345'; // Replace with your actual secret token
 
       // Attach event listeners to CTA buttons
       addEventListenerIfExists('.cta', 'click', function() {
-        gtag('event', 'cta_click', {
-          'event_category': 'CTA',
-          'event_label': `Variant ${variant.toUpperCase()} - Clicked CTA`,
-          'value': 1
-        });
+        if (typeof gtag === 'function') {
+          gtag('event', 'cta_click', {
+            'event_category': 'CTA',
+            'event_label': `Variant ${variant.toUpperCase()} - Clicked CTA`,
+            'value': 1
+          });
+        }
       });
-
-      // Handle form submissions via AJAX
-      handleFormSubmit(`waitlist-form-${variant}`, variant.toUpperCase());
     });
   </script>
 
 </body>
-</html> -->
-
-<!-- JavaScript -->
-<script>
-    // Set current year in footer
-    document.getElementById('current-year').textContent = new Date().getFullYear();
-  
-    // Function to get a cookie by name
-    function getCookie(name) {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop().split(';').shift();
-    }
-  
-    // Function to set a cookie
-    function setCookie(name, value, days) {
-      const d = new Date();
-      d.setTime(d.getTime() + (days*24*60*60*1000));
-      const expires = "expires="+ d.toUTCString();
-      document.cookie = `${name}=${value};${expires};path=/`;
-    }
-  
-    // Function to randomly assign a variant
-    function assignVariant() {
-      const variants = ['a', 'b', 'c']; // Variants A, B, C
-      const randomIndex = Math.floor(Math.random() * variants.length);
-      return variants[randomIndex];
-    }
-  
-    // Get or assign variant
-    let variant = getCookie('avia_variant');
-    if (!variant) {
-      variant = assignVariant();
-      setCookie('avia_variant', variant, 30); // Cookie expires in 30 days
-    }
-  
-    // Function to safely add event listeners
-    function addEventListenerIfExists(selector, event, handler) {
-      const element = document.querySelector(selector);
-      if (element) {
-        element.addEventListener(event, handler);
-      }
-    }
-  
-    // Function to show the selected variant
-    function showVariant(variant) {
-      // Hide all variants, forms, illustrations, and incentives
-      document.querySelectorAll('.variant, .form, .illustration, .incentive').forEach(el => {
-        el.classList.remove('visible');
-        el.classList.add('hidden');
-      });
-  
-      // Show selected variant
-      const selectedVariant = document.querySelector(`.variant-${variant}`);
-      if (selectedVariant) {
-        selectedVariant.classList.remove('hidden');
-        selectedVariant.classList.add('visible');
-      }
-  
-      // Show corresponding form
-      const selectedForm = document.querySelector(`.form-${variant}`);
-      if (selectedForm) {
-        selectedForm.classList.remove('hidden');
-        selectedForm.classList.add('visible');
-      }
-  
-      // Show corresponding illustration
-      const selectedIllustration = document.querySelector(`.illustration-${variant}`);
-      if (selectedIllustration) {
-        selectedIllustration.classList.remove('hidden');
-        selectedIllustration.classList.add('visible');
-      }
-  
-      // Show corresponding incentive
-      const selectedIncentive = document.querySelector(`.incentive-${variant}`);
-      if (selectedIncentive) {
-        selectedIncentive.classList.remove('hidden');
-        selectedIncentive.classList.add('visible');
-      }
-  
-      // Send variant assignment to GA
-      gtag('event', 'variant_assigned', {
-        'variant': variant.toUpperCase()
-      });
-    }
-  
-    // Function to handle form submission via AJAX
-    function handleFormSubmit(formId, variantLabel) {
-      const form = document.getElementById(formId);
-      if (form) {
-        form.addEventListener('submit', function(event) {
-          event.preventDefault(); // Prevent default form submission
-  
-          // Collect form data
-          const formData = new FormData(form);
-          const data = {};
-          formData.forEach((value, key) => {
-            data[key] = value;
-          });
-  
-          // Add the secret token
-          data.token = 'MY_SECRET_TOKEN_12345'; // Replace with your actual secret token
-  
-          // Send form data via Fetch API (AJAX)
-          fetch('https://script.google.com/macros/s/AKfycbw9YJAlC2yFqxdNFU54OwOJ6ZrnngqmLhEkFRpNpJkDQiOt4URxWCWl2ZaprJbMUMwf/exec', { // Replace with your actual Web App URL
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-          })
-          .then(response => response.json())
-          .then(responseData => {
-            if (responseData.result === 'success') {
-              // Success: Show success message
-              document.getElementById('form-message').classList.remove('hidden');
-              // Hide the form after submission
-              form.classList.add('hidden');
-              // Track form submission in GA
-              gtag('event', 'form_submit', {
-                'event_category': 'Waitlist Form',
-                'event_label': `Variant ${variantLabel} Form Submit`,
-                'value': 1
-              });
-            } else {
-              // Error: Show error message
-              alert(responseData.message || 'There was an error submitting your form. Please try again later.');
-            }
-          })
-          .catch(error => {
-            console.error('Error submitting form:', error);
-            alert('There was an error submitting your form. Please try again later.');
-          });
-        });
-      }
-    }
-  
-    // Document Ready
-    document.addEventListener('DOMContentLoaded', () => {
-      // Assign variant to hidden fields
-      document.querySelectorAll('[name="variant"]').forEach(input => {
-        input.value = variant.toUpperCase();
-      });
-  
-      // Show the selected variant
-      showVariant(variant);
-  
-      // Attach event listeners to CTA buttons
-      addEventListenerIfExists('.cta', 'click', function() {
-        gtag('event', 'cta_click', {
-          'event_category': 'CTA',
-          'event_label': `Variant ${variant.toUpperCase()} - Clicked CTA`,
-          'value': 1
-        });
-      });
-  
-      // Handle form submissions via AJAX
-      handleFormSubmit(`waitlist-form-${variant}`, variant.toUpperCase());
-    });
-  </script>
-  
+</html>
