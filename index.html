@@ -43,8 +43,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Font Awesome CSS CDN -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <style>
       /* Ensure all variant forms and incentives are hidden by default */
       .variant, .form, .incentive, .illustration {
@@ -57,6 +57,9 @@
       .visible {
         display: block;
         opacity: 1;
+      }
+      .hidden {
+        display: none;
       }
     </style>
 </head>
@@ -197,6 +200,12 @@
               <option value="product_management">Product Management</option>
               <option value="other">Other</option>
             </select>
+            
+            <!-- New "Other" Input Field -->
+            <div id="other-industry-container" class="hidden">
+              <input type="text" id="industry-other" name="industry_other" placeholder="Please specify your industry"
+                class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Specify Your Industry">
+            </div>
             
             <input type="text" id="referred-by" name="referred_by" placeholder="Referred By (Optional)"
               class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Referred By">
@@ -346,6 +355,29 @@
       }
     }
 
+    // Function to toggle the "Other" industry input field
+    function toggleOtherIndustry() {
+      const industrySelect = document.getElementById('industry');
+      const otherIndustryContainer = document.getElementById('other-industry-container');
+      const otherIndustryInput = document.getElementById('industry-other');
+      
+      industrySelect.addEventListener('change', function() {
+        if (this.value === 'other') {
+          otherIndustryContainer.classList.remove('hidden');
+          otherIndustryContainer.classList.add('visible');
+          // Set 'required' attribute
+          otherIndustryInput.setAttribute('required', 'required');
+        } else {
+          otherIndustryContainer.classList.remove('visible');
+          otherIndustryContainer.classList.add('hidden');
+          // Remove 'required' attribute
+          otherIndustryInput.removeAttribute('required');
+          // Clear the input value
+          otherIndustryInput.value = '';
+        }
+      });
+    }
+
     // Document Ready
     document.addEventListener('DOMContentLoaded', () => {
       // Assign variant to hidden fields
@@ -366,6 +398,9 @@
           });
         }
       });
+
+      // Initialize the "Other" industry toggle functionality
+      toggleOtherIndustry();
     });
   </script>
 
