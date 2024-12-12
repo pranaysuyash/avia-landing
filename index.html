@@ -274,7 +274,7 @@
                         <!-- Form Variants -->
                         <div class="form form-a hidden">
                             <form id="waitlist-form-a" class="space-y-4"
-                                action="https://script.google.com/macros/s/AKfycbw9YJAlC2yFqxdNFU54OwOJ6ZrnngqmLhEkFRpNpJkDQiOt4URxWCWl2ZaprJbMUMwf/exec"
+                                action="https://script.google.com/macros/s/AKfycbyl1fexvA7FhiuzUp_DvWZ7KbdVMz6iPZCs5y7BmlO0e7FFLvq-D75zCRntLc5s76PX/exec"
                                 method="POST">
                                 <!-- Add this in your form section -->
                                 <noscript>
@@ -309,7 +309,7 @@
                         <!-- Variant B: Detailed Form -->
                         <div class="form form-b hidden">
                             <form id="waitlist-form-b" class="space-y-4"
-                                action="https://script.google.com/macros/s/AKfycbw9YJAlC2yFqxdNFU54OwOJ6ZrnngqmLhEkFRpNpJkDQiOt4URxWCWl2ZaprJbMUMwf/exec"
+                                action="https://script.google.com/macros/s/AKfycbyl1fexvA7FhiuzUp_DvWZ7KbdVMz6iPZCs5y7BmlO0e7FFLvq-D75zCRntLc5s76PX/exec"
                                 method="POST">
                                 <div class="grid grid-cols-1 gap-4">
                                     <div>
@@ -360,7 +360,7 @@
                         <!-- Variant C: Minimal Form -->
                         <div class="form form-c hidden">
                             <form id="waitlist-form-c" class="space-y-4"
-                                action="https://script.google.com/macros/s/AKfycbw9YJAlC2yFqxdNFU54OwOJ6ZrnngqmLhEkFRpNpJkDQiOt4URxWCWl2ZaprJbMUMwf/exec"
+                                action="https://script.google.com/macros/s/AKfycbyl1fexvA7FhiuzUp_DvWZ7KbdVMz6iPZCs5y7BmlO0e7FFLvq-D75zCRntLc5s76PX/exec"
                                 method="POST">
                                 <div>
                                     <label for="email-c"
@@ -557,226 +557,6 @@
         }
 
         // Form submission handler
-        // function handleFormSubmission(form) {
-        //     const formData = new FormData(form);
-        //     const formVariant = formData.get('variant'); // Get variant from form data
-
-        //     const submitButton = form.querySelector('button[type="submit"]');
-        //     const buttonText = submitButton.querySelector('span');
-        //     const originalText = buttonText.textContent;
-
-        //     // Add loading state
-        //     submitButton.disabled = true;
-        //     buttonText.textContent = 'Submitting...';
-        //     submitButton.classList.add('loading');
-
-        //     trackEvent('form_submit_attempt', {
-        //         form_id: form.id,
-        //         variant: formVariant
-        //     });
-
-        //     fetch(form.action, {
-        //         method: 'POST',
-        //         body: formData
-        //     }).then(response => {
-        //         const contentType = response.headers.get("content-type");
-        //         if (contentType && contentType.includes("application/json")) {
-        //             return response.json();
-        //         }
-        //         throw new TypeError("Oops, we haven't got JSON!");
-        //     }).then(data => {
-        //         form.style.display = 'none';
-        //         const messageDiv = document.getElementById('form-message');
-        //         messageDiv.classList.remove('hidden');
-
-        //         if (data.isDuplicate) {
-        //             messageDiv.innerHTML = messages.duplicate;
-        //             trackEvent('duplicate_signup_attempt', {
-        //                 form_id: form.id,
-        //                 variant: variant.toUpperCase()
-        //             });
-        //         } else {
-        //             messageDiv.innerHTML = messages.success;
-        //             trackEvent('signup_success', {
-        //                 form_id: form.id,
-        //                 variant: variant.toUpperCase()
-        //             });
-        //         }
-        //     }).catch(error => {
-        //         console.error('Form submission error:', error);
-
-        //         trackEvent('form_error', {
-        //             error_type: 'submission_failed',
-        //             error_message: error.message,
-        //             form_id: form.id
-        //         });
-
-        //         submitButton.disabled = false;
-        //         buttonText.textContent = originalText;
-        //         submitButton.classList.remove('loading');
-
-        //         const messageDiv = document.getElementById('form-message');
-        //         messageDiv.classList.remove('hidden');
-        //         messageDiv.innerHTML = messages.error;
-        //     });
-        // }
-
-        // function handleFormSubmission(form) {
-        //     const formData = new FormData(form);
-        //     const submitButton = form.querySelector('button[type="submit"]');
-        //     const buttonText = submitButton.querySelector('span');
-        //     const originalText = buttonText.textContent;
-        //     const formVariant = formData.get('variant');
-
-        //     // Add loading state
-        //     submitButton.disabled = true;
-        //     buttonText.textContent = 'Submitting...';
-        //     submitButton.classList.add('loading');
-
-        //     // Track attempt
-        //     trackEvent('form_submit_attempt', {
-        //         form_id: form.id,
-        //         variant: formVariant
-        //     });
-
-        //     // Convert FormData to URL params
-        //     const data = new URLSearchParams(formData).toString();
-        //     const scriptUrl = `${form.action}?${data}&callback=handleResponse`;
-
-        //     // Create script element
-        //     const script = document.createElement('script');
-        //     script.src = scriptUrl;
-
-        //     // Define global callback
-        //     window.handleResponse = function (response) {
-        //         submitButton.disabled = false;
-        //         buttonText.textContent = originalText;
-        //         submitButton.classList.remove('loading');
-
-        //         form.style.display = 'none';
-        //         const messageDiv = document.getElementById('form-message');
-        //         messageDiv.classList.remove('hidden');
-
-        //         if (response.isDuplicate) {
-        //             messageDiv.innerHTML = messages.duplicate;
-        //             trackEvent('duplicate_signup_attempt', {
-        //                 form_id: form.id,
-        //                 variant: formVariant
-        //             });
-        //         } else if (response.success) {
-        //             messageDiv.innerHTML = messages.success;
-        //             trackEvent('signup_success', {
-        //                 form_id: form.id,
-        //                 variant: formVariant
-        //             });
-        //         } else {
-        //             messageDiv.innerHTML = messages.error;
-        //             trackEvent('form_error', {
-        //                 error_type: 'submission_failed',
-        //                 error_message: response.message || 'Unknown error',
-        //                 form_id: form.id
-        //             });
-        //         }
-
-        //         // Clean up
-        //         document.body.removeChild(script);
-        //         delete window.handleResponse;
-        //     };
-
-        //     // Add error handling for script load failure
-        //     script.onerror = function () {
-        //         submitButton.disabled = false;
-        //         buttonText.textContent = originalText;
-        //         submitButton.classList.remove('loading');
-
-        //         const messageDiv = document.getElementById('form-message');
-        //         messageDiv.classList.remove('hidden');
-        //         messageDiv.innerHTML = messages.error;
-
-        //         trackEvent('form_error', {
-        //             error_type: 'script_load_failed',
-        //             form_id: form.id
-        //         });
-
-        //         // Clean up
-        //         document.body.removeChild(script);
-        //         delete window.handleResponse;
-        //     };
-
-        //     // Append script to document
-        //     document.body.appendChild(script);
-        // }
-
-        // function handleFormSubmission(form) {
-        //     const formData = new FormData(form);
-        //     const formVariant = formData.get('variant');
-        //     const submitButton = form.querySelector('button[type="submit"]');
-        //     const buttonText = submitButton.querySelector('span');
-        //     const originalText = buttonText.textContent;
-
-        //     // Add loading state
-        //     submitButton.disabled = true;
-        //     buttonText.textContent = 'Submitting...';
-        //     submitButton.classList.add('loading');
-
-        //     // Track submission attempt
-        //     trackEvent('form_submit_attempt', {
-        //         form_id: form.id,
-        //         variant: formVariant
-        //     });
-
-        //     // Create a hidden iframe
-        //     const iframe = document.createElement('iframe');
-        //     iframe.style.display = 'none';
-        //     iframe.name = 'hidden-iframe';
-        //     document.body.appendChild(iframe);
-
-        //     // Set form target to iframe
-        //     form.target = 'hidden-iframe';
-
-        //     // Handle response
-        //     iframe.onload = function () {
-        //         try {
-        //             submitButton.disabled = false;
-        //             buttonText.textContent = originalText;
-        //             submitButton.classList.remove('loading');
-
-        //             form.style.display = 'none';
-        //             const messageDiv = document.getElementById('form-message');
-        //             messageDiv.classList.remove('hidden');
-        //             messageDiv.innerHTML = messages.success;
-
-        //             trackEvent('signup_success', {
-        //                 form_id: form.id,
-        //                 variant: formVariant
-        //             });
-        //         } catch (error) {
-        //             console.error('Form submission error:', error);
-        //             submitButton.disabled = false;
-        //             buttonText.textContent = originalText;
-        //             submitButton.classList.remove('loading');
-
-        //             const messageDiv = document.getElementById('form-message');
-        //             messageDiv.classList.remove('hidden');
-        //             messageDiv.innerHTML = messages.error;
-
-        //             trackEvent('form_error', {
-        //                 error_type: 'submission_failed',
-        //                 error_message: error.message,
-        //                 form_id: form.id
-        //             });
-        //         } finally {
-        //             // Clean up iframe
-        //             setTimeout(() => {
-        //                 document.body.removeChild(iframe);
-        //             }, 1000);
-        //         }
-        //     };
-
-        //     // Submit the form
-        //     form.submit();
-        // }
-
         function handleFormSubmission(form) {
             const formData = new FormData(form);
             const submitButton = form.querySelector('button[type="submit"]');
@@ -794,6 +574,7 @@
 
             fetch(form.action, {
                 method: 'POST',
+                mode: 'cors', // ensures CORS is handled
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: data
             })
