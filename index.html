@@ -621,90 +621,160 @@
         //     });
         // }
 
+        // function handleFormSubmission(form) {
+        //     const formData = new FormData(form);
+        //     const submitButton = form.querySelector('button[type="submit"]');
+        //     const buttonText = submitButton.querySelector('span');
+        //     const originalText = buttonText.textContent;
+        //     const formVariant = formData.get('variant');
+
+        //     // Add loading state
+        //     submitButton.disabled = true;
+        //     buttonText.textContent = 'Submitting...';
+        //     submitButton.classList.add('loading');
+
+        //     // Track attempt
+        //     trackEvent('form_submit_attempt', {
+        //         form_id: form.id,
+        //         variant: formVariant
+        //     });
+
+        //     // Convert FormData to URL params
+        //     const data = new URLSearchParams(formData).toString();
+        //     const scriptUrl = `${form.action}?${data}&callback=handleResponse`;
+
+        //     // Create script element
+        //     const script = document.createElement('script');
+        //     script.src = scriptUrl;
+
+        //     // Define global callback
+        //     window.handleResponse = function (response) {
+        //         submitButton.disabled = false;
+        //         buttonText.textContent = originalText;
+        //         submitButton.classList.remove('loading');
+
+        //         form.style.display = 'none';
+        //         const messageDiv = document.getElementById('form-message');
+        //         messageDiv.classList.remove('hidden');
+
+        //         if (response.isDuplicate) {
+        //             messageDiv.innerHTML = messages.duplicate;
+        //             trackEvent('duplicate_signup_attempt', {
+        //                 form_id: form.id,
+        //                 variant: formVariant
+        //             });
+        //         } else if (response.success) {
+        //             messageDiv.innerHTML = messages.success;
+        //             trackEvent('signup_success', {
+        //                 form_id: form.id,
+        //                 variant: formVariant
+        //             });
+        //         } else {
+        //             messageDiv.innerHTML = messages.error;
+        //             trackEvent('form_error', {
+        //                 error_type: 'submission_failed',
+        //                 error_message: response.message || 'Unknown error',
+        //                 form_id: form.id
+        //             });
+        //         }
+
+        //         // Clean up
+        //         document.body.removeChild(script);
+        //         delete window.handleResponse;
+        //     };
+
+        //     // Add error handling for script load failure
+        //     script.onerror = function () {
+        //         submitButton.disabled = false;
+        //         buttonText.textContent = originalText;
+        //         submitButton.classList.remove('loading');
+
+        //         const messageDiv = document.getElementById('form-message');
+        //         messageDiv.classList.remove('hidden');
+        //         messageDiv.innerHTML = messages.error;
+
+        //         trackEvent('form_error', {
+        //             error_type: 'script_load_failed',
+        //             form_id: form.id
+        //         });
+
+        //         // Clean up
+        //         document.body.removeChild(script);
+        //         delete window.handleResponse;
+        //     };
+
+        //     // Append script to document
+        //     document.body.appendChild(script);
+        // }
+
         function handleFormSubmission(form) {
             const formData = new FormData(form);
+            const formVariant = formData.get('variant');
             const submitButton = form.querySelector('button[type="submit"]');
             const buttonText = submitButton.querySelector('span');
             const originalText = buttonText.textContent;
-            const formVariant = formData.get('variant');
 
             // Add loading state
             submitButton.disabled = true;
             buttonText.textContent = 'Submitting...';
             submitButton.classList.add('loading');
 
-            // Track attempt
+            // Track submission attempt
             trackEvent('form_submit_attempt', {
                 form_id: form.id,
                 variant: formVariant
             });
 
-            // Convert FormData to URL params
-            const data = new URLSearchParams(formData).toString();
-            const scriptUrl = `${form.action}?${data}&callback=handleResponse`;
+            // Create a hidden iframe
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.name = 'hidden-iframe';
+            document.body.appendChild(iframe);
 
-            // Create script element
-            const script = document.createElement('script');
-            script.src = scriptUrl;
+            // Set form target to iframe
+            form.target = 'hidden-iframe';
 
-            // Define global callback
-            window.handleResponse = function (response) {
-                submitButton.disabled = false;
-                buttonText.textContent = originalText;
-                submitButton.classList.remove('loading');
+            // Handle response
+            iframe.onload = function () {
+                try {
+                    submitButton.disabled = false;
+                    buttonText.textContent = originalText;
+                    submitButton.classList.remove('loading');
 
-                form.style.display = 'none';
-                const messageDiv = document.getElementById('form-message');
-                messageDiv.classList.remove('hidden');
-
-                if (response.isDuplicate) {
-                    messageDiv.innerHTML = messages.duplicate;
-                    trackEvent('duplicate_signup_attempt', {
-                        form_id: form.id,
-                        variant: formVariant
-                    });
-                } else if (response.success) {
+                    form.style.display = 'none';
+                    const messageDiv = document.getElementById('form-message');
+                    messageDiv.classList.remove('hidden');
                     messageDiv.innerHTML = messages.success;
+
                     trackEvent('signup_success', {
                         form_id: form.id,
                         variant: formVariant
                     });
-                } else {
+                } catch (error) {
+                    console.error('Form submission error:', error);
+                    submitButton.disabled = false;
+                    buttonText.textContent = originalText;
+                    submitButton.classList.remove('loading');
+
+                    const messageDiv = document.getElementById('form-message');
+                    messageDiv.classList.remove('hidden');
                     messageDiv.innerHTML = messages.error;
+
                     trackEvent('form_error', {
                         error_type: 'submission_failed',
-                        error_message: response.message || 'Unknown error',
+                        error_message: error.message,
                         form_id: form.id
                     });
+                } finally {
+                    // Clean up iframe
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                    }, 1000);
                 }
-
-                // Clean up
-                document.body.removeChild(script);
-                delete window.handleResponse;
             };
 
-            // Add error handling for script load failure
-            script.onerror = function () {
-                submitButton.disabled = false;
-                buttonText.textContent = originalText;
-                submitButton.classList.remove('loading');
-
-                const messageDiv = document.getElementById('form-message');
-                messageDiv.classList.remove('hidden');
-                messageDiv.innerHTML = messages.error;
-
-                trackEvent('form_error', {
-                    error_type: 'script_load_failed',
-                    form_id: form.id
-                });
-
-                // Clean up
-                document.body.removeChild(script);
-                delete window.handleResponse;
-            };
-
-            // Append script to document
-            document.body.appendChild(script);
+            // Submit the form
+            form.submit();
         }
         // Initialize everything when the DOM is ready
         document.addEventListener('DOMContentLoaded', () => {
