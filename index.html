@@ -707,75 +707,183 @@
         //     document.body.appendChild(script);
         // }
 
+        // function handleFormSubmission(form) {
+        //     const formData = new FormData(form);
+        //     const formVariant = formData.get('variant');
+        //     const submitButton = form.querySelector('button[type="submit"]');
+        //     const buttonText = submitButton.querySelector('span');
+        //     const originalText = buttonText.textContent;
+
+        //     // Add loading state
+        //     submitButton.disabled = true;
+        //     buttonText.textContent = 'Submitting...';
+        //     submitButton.classList.add('loading');
+
+        //     // Track submission attempt
+        //     trackEvent('form_submit_attempt', {
+        //         form_id: form.id,
+        //         variant: formVariant
+        //     });
+
+        //     // Create a hidden iframe
+        //     const iframe = document.createElement('iframe');
+        //     iframe.style.display = 'none';
+        //     iframe.name = 'hidden-iframe';
+        //     document.body.appendChild(iframe);
+
+        //     // Set form target to iframe
+        //     form.target = 'hidden-iframe';
+
+        //     // Handle response
+        //     iframe.onload = function () {
+        //         try {
+        //             submitButton.disabled = false;
+        //             buttonText.textContent = originalText;
+        //             submitButton.classList.remove('loading');
+
+        //             form.style.display = 'none';
+        //             const messageDiv = document.getElementById('form-message');
+        //             messageDiv.classList.remove('hidden');
+        //             messageDiv.innerHTML = messages.success;
+
+        //             trackEvent('signup_success', {
+        //                 form_id: form.id,
+        //                 variant: formVariant
+        //             });
+        //         } catch (error) {
+        //             console.error('Form submission error:', error);
+        //             submitButton.disabled = false;
+        //             buttonText.textContent = originalText;
+        //             submitButton.classList.remove('loading');
+
+        //             const messageDiv = document.getElementById('form-message');
+        //             messageDiv.classList.remove('hidden');
+        //             messageDiv.innerHTML = messages.error;
+
+        //             trackEvent('form_error', {
+        //                 error_type: 'submission_failed',
+        //                 error_message: error.message,
+        //                 form_id: form.id
+        //             });
+        //         } finally {
+        //             // Clean up iframe
+        //             setTimeout(() => {
+        //                 document.body.removeChild(iframe);
+        //             }, 1000);
+        //         }
+        //     };
+
+        //     // Submit the form
+        //     form.submit();
+        // }
+
         function handleFormSubmission(form) {
             const formData = new FormData(form);
-            const formVariant = formData.get('variant');
             const submitButton = form.querySelector('button[type="submit"]');
             const buttonText = submitButton.querySelector('span');
             const originalText = buttonText.textContent;
+            const formVariant = formData.get('variant');
 
             // Add loading state
             submitButton.disabled = true;
             buttonText.textContent = 'Submitting...';
             submitButton.classList.add('loading');
 
-            // Track submission attempt
-            trackEvent('form_submit_attempt', {
-                form_id: form.id,
-                variant: formVariant
-            });
+            // Convert FormData to URL-encoded data
+            const data = new URLSearchParams(formData);
 
-            // Create a hidden iframe
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.name = 'hidden-iframe';
-            document.body.appendChild(iframe);
-
-            // Set form target to iframe
-            form.target = 'hidden-iframe';
-
-            // Handle response
-            iframe.onload = function () {
-                try {
+            fetch(form.action, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: data
+            })
+                .then(response => response.json())
+                .then(json => {
+                    // Reset button
                     submitButton.disabled = false;
                     buttonText.textContent = originalText;
                     submitButton.classList.remove('loading');
 
+                    // Hide the form and show a message
                     form.style.display = 'none';
                     const messageDiv = document.getElementById('form-message');
                     messageDiv.classList.remove('hidden');
-                    messageDiv.innerHTML = messages.success;
 
-                    trackEvent('signup_success', {
-                        form_id: form.id,
-                        variant: formVariant
-                    });
-                } catch (error) {
+                    if (json.isDuplicate) {
+                        // Duplicate email message
+                        messageDiv.innerHTML = `
+                <div class="text-center py-8">
+                    <svg class="w-16 h-16 text-blue-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-2">Already Registered!</h3>
+                    <p class="text-gray-600">You're already on our waitlist. We'll notify you when AVIA launches!</p>
+                    <button onclick="location.reload()" class="mt-6 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        Try Different Email
+                    </button>
+                </div>
+            `;
+                    } else if (json.success) {
+                        // Success message
+                        messageDiv.innerHTML = `
+                <div class="text-center py-8">
+                    <svg class="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-2">Thank You!</h3>
+                    <p class="text-gray-600">You've successfully joined our waitlist. We'll keep you updated!</p>
+                </div>
+            `;
+                    } else {
+                        // General error message
+                        messageDiv.innerHTML = `
+                <div class="text-center py-8">
+                    <svg class="w-16 h-16 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-2">Oops!</h3>
+                    <p class="text-gray-600">Something went wrong. Please try again later.</p>
+                    <button onclick="location.reload()" class="mt-6 px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                        Try Again
+                    </button>
+                </div>
+            `;
+                    }
+                })
+                .catch(error => {
                     console.error('Form submission error:', error);
+
+                    // Reset button
                     submitButton.disabled = false;
                     buttonText.textContent = originalText;
                     submitButton.classList.remove('loading');
 
                     const messageDiv = document.getElementById('form-message');
                     messageDiv.classList.remove('hidden');
-                    messageDiv.innerHTML = messages.error;
-
-                    trackEvent('form_error', {
-                        error_type: 'submission_failed',
-                        error_message: error.message,
-                        form_id: form.id
-                    });
-                } finally {
-                    // Clean up iframe
-                    setTimeout(() => {
-                        document.body.removeChild(iframe);
-                    }, 1000);
-                }
-            };
-
-            // Submit the form
-            form.submit();
+                    messageDiv.innerHTML = `
+            <div class="text-center py-8">
+                <svg class="w-16 h-16 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <h3 class="text-2xl font-semibold text-gray-800 mb-2">Oops!</h3>
+                <p class="text-gray-600">Network error. Please try again later.</p>
+                <button onclick="location.reload()" class="mt-6 px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+                    Try Again
+                </button>
+            </div>
+        `;
+                });
         }
+
+
+
         // Initialize everything when the DOM is ready
         document.addEventListener('DOMContentLoaded', () => {
             // Set current year
