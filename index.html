@@ -557,60 +557,134 @@
         }
 
         // Form submission handler
+        // function handleFormSubmission(form) {
+        //     const formData = new FormData(form);
+        //     const formVariant = formData.get('variant'); // Get variant from form data
+
+        //     const submitButton = form.querySelector('button[type="submit"]');
+        //     const buttonText = submitButton.querySelector('span');
+        //     const originalText = buttonText.textContent;
+
+        //     // Add loading state
+        //     submitButton.disabled = true;
+        //     buttonText.textContent = 'Submitting...';
+        //     submitButton.classList.add('loading');
+
+        //     trackEvent('form_submit_attempt', {
+        //         form_id: form.id,
+        //         variant: formVariant
+        //     });
+
+        //     fetch(form.action, {
+        //         method: 'POST',
+        //         body: formData
+        //     }).then(response => {
+        //         const contentType = response.headers.get("content-type");
+        //         if (contentType && contentType.includes("application/json")) {
+        //             return response.json();
+        //         }
+        //         throw new TypeError("Oops, we haven't got JSON!");
+        //     }).then(data => {
+        //         form.style.display = 'none';
+        //         const messageDiv = document.getElementById('form-message');
+        //         messageDiv.classList.remove('hidden');
+
+        //         if (data.isDuplicate) {
+        //             messageDiv.innerHTML = messages.duplicate;
+        //             trackEvent('duplicate_signup_attempt', {
+        //                 form_id: form.id,
+        //                 variant: variant.toUpperCase()
+        //             });
+        //         } else {
+        //             messageDiv.innerHTML = messages.success;
+        //             trackEvent('signup_success', {
+        //                 form_id: form.id,
+        //                 variant: variant.toUpperCase()
+        //             });
+        //         }
+        //     }).catch(error => {
+        //         console.error('Form submission error:', error);
+
+        //         trackEvent('form_error', {
+        //             error_type: 'submission_failed',
+        //             error_message: error.message,
+        //             form_id: form.id
+        //         });
+
+        //         submitButton.disabled = false;
+        //         buttonText.textContent = originalText;
+        //         submitButton.classList.remove('loading');
+
+        //         const messageDiv = document.getElementById('form-message');
+        //         messageDiv.classList.remove('hidden');
+        //         messageDiv.innerHTML = messages.error;
+        //     });
+        // }
+
         function handleFormSubmission(form) {
             const formData = new FormData(form);
-            const formVariant = formData.get('variant'); // Get variant from form data
-
             const submitButton = form.querySelector('button[type="submit"]');
             const buttonText = submitButton.querySelector('span');
             const originalText = buttonText.textContent;
+            const formVariant = formData.get('variant');
 
             // Add loading state
             submitButton.disabled = true;
             buttonText.textContent = 'Submitting...';
             submitButton.classList.add('loading');
 
+            // Track attempt
             trackEvent('form_submit_attempt', {
                 form_id: form.id,
                 variant: formVariant
             });
 
-            fetch(form.action, {
-                method: 'POST',
-                body: formData
-            }).then(response => {
-                const contentType = response.headers.get("content-type");
-                if (contentType && contentType.includes("application/json")) {
-                    return response.json();
-                }
-                throw new TypeError("Oops, we haven't got JSON!");
-            }).then(data => {
+            // Convert FormData to URL params
+            const data = new URLSearchParams(formData).toString();
+            const scriptUrl = `${form.action}?${data}&callback=handleResponse`;
+
+            // Create script element
+            const script = document.createElement('script');
+            script.src = scriptUrl;
+
+            // Define global callback
+            window.handleResponse = function (response) {
+                submitButton.disabled = false;
+                buttonText.textContent = originalText;
+                submitButton.classList.remove('loading');
+
                 form.style.display = 'none';
                 const messageDiv = document.getElementById('form-message');
                 messageDiv.classList.remove('hidden');
 
-                if (data.isDuplicate) {
+                if (response.isDuplicate) {
                     messageDiv.innerHTML = messages.duplicate;
                     trackEvent('duplicate_signup_attempt', {
                         form_id: form.id,
-                        variant: variant.toUpperCase()
+                        variant: formVariant
                     });
-                } else {
+                } else if (response.success) {
                     messageDiv.innerHTML = messages.success;
                     trackEvent('signup_success', {
                         form_id: form.id,
-                        variant: variant.toUpperCase()
+                        variant: formVariant
+                    });
+                } else {
+                    messageDiv.innerHTML = messages.error;
+                    trackEvent('form_error', {
+                        error_type: 'submission_failed',
+                        error_message: response.message || 'Unknown error',
+                        form_id: form.id
                     });
                 }
-            }).catch(error => {
-                console.error('Form submission error:', error);
 
-                trackEvent('form_error', {
-                    error_type: 'submission_failed',
-                    error_message: error.message,
-                    form_id: form.id
-                });
+                // Clean up
+                document.body.removeChild(script);
+                delete window.handleResponse;
+            };
 
+            // Add error handling for script load failure
+            script.onerror = function () {
                 submitButton.disabled = false;
                 buttonText.textContent = originalText;
                 submitButton.classList.remove('loading');
@@ -618,9 +692,20 @@
                 const messageDiv = document.getElementById('form-message');
                 messageDiv.classList.remove('hidden');
                 messageDiv.innerHTML = messages.error;
-            });
-        }
 
+                trackEvent('form_error', {
+                    error_type: 'script_load_failed',
+                    form_id: form.id
+                });
+
+                // Clean up
+                document.body.removeChild(script);
+                delete window.handleResponse;
+            };
+
+            // Append script to document
+            document.body.appendChild(script);
+        }
         // Initialize everything when the DOM is ready
         document.addEventListener('DOMContentLoaded', () => {
             // Set current year
