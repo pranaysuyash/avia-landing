@@ -274,7 +274,7 @@
                         <!-- Form Variants -->
                         <div class="form form-a hidden">
                             <form id="waitlist-form-a" class="space-y-4"
-                                action="https://script.google.com/macros/s/AKfycbyl1fexvA7FhiuzUp_DvWZ7KbdVMz6iPZCs5y7BmlO0e7FFLvq-D75zCRntLc5s76PX/exec"
+                                action="https://script.google.com/macros/s/AKfycbx2ofEnCzhKSLJVQiN59P2uPAmTAPNuIp4ADmxxeKTvUW1wLlyR-nopRI5lsmNoyFSA/exec"
                                 method="POST">
                                 <!-- Add this in your form section -->
                                 <noscript>
@@ -309,7 +309,7 @@
                         <!-- Variant B: Detailed Form -->
                         <div class="form form-b hidden">
                             <form id="waitlist-form-b" class="space-y-4"
-                                action="https://script.google.com/macros/s/AKfycbyl1fexvA7FhiuzUp_DvWZ7KbdVMz6iPZCs5y7BmlO0e7FFLvq-D75zCRntLc5s76PX/exec"
+                                action="https://script.google.com/macros/s/AKfycbx2ofEnCzhKSLJVQiN59P2uPAmTAPNuIp4ADmxxeKTvUW1wLlyR-nopRI5lsmNoyFSA/exec"
                                 method="POST">
                                 <div class="grid grid-cols-1 gap-4">
                                     <div>
@@ -360,7 +360,7 @@
                         <!-- Variant C: Minimal Form -->
                         <div class="form form-c hidden">
                             <form id="waitlist-form-c" class="space-y-4"
-                                action="https://script.google.com/macros/s/AKfycbyl1fexvA7FhiuzUp_DvWZ7KbdVMz6iPZCs5y7BmlO0e7FFLvq-D75zCRntLc5s76PX/exec"
+                                action="https://script.google.com/macros/s/AKfycbx2ofEnCzhKSLJVQiN59P2uPAmTAPNuIp4ADmxxeKTvUW1wLlyR-nopRI5lsmNoyFSA/exec"
                                 method="POST">
                                 <div>
                                     <label for="email-c"
@@ -557,35 +557,236 @@
         }
 
         // Form submission handler
+        // function handleFormSubmission(form) {
+        //     const formData = new FormData(form);
+        //     const submitButton = form.querySelector('button[type="submit"]');
+        //     const buttonText = submitButton.querySelector('span');
+        //     const originalText = buttonText.textContent;
+        //     const formVariant = formData.get('variant');
+
+        //     // Add loading state
+        //     submitButton.disabled = true;
+        //     buttonText.textContent = 'Submitting...';
+        //     submitButton.classList.add('loading');
+
+        //     // Convert FormData to URL-encoded data
+        //     const data = new URLSearchParams(formData);
+
+        //     fetch(form.action, {
+        //         method: 'POST',
+        //         mode: 'cors', // ensures CORS is handled
+        //         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        //         body: data
+        //     })
+        //         .then(response => response.json())
+        //         .then(json => {
+        //             // Reset button
+        //             submitButton.disabled = false;
+        //             buttonText.textContent = originalText;
+        //             submitButton.classList.remove('loading');
+
+        //             // Hide the form and show a message
+        //             form.style.display = 'none';
+        //             const messageDiv = document.getElementById('form-message');
+        //             messageDiv.classList.remove('hidden');
+
+        //             if (json.isDuplicate) {
+        //                 // Duplicate email message
+        //                 messageDiv.innerHTML = `
+        //         <div class="text-center py-8">
+        //             <svg class="w-16 h-16 text-blue-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        //                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        //                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        //             </svg>
+        //             <h3 class="text-2xl font-semibold text-gray-800 mb-2">Already Registered!</h3>
+        //             <p class="text-gray-600">You're already on our waitlist. We'll notify you when AVIA launches!</p>
+        //             <button onclick="location.reload()" class="mt-6 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+        //                 Try Different Email
+        //             </button>
+        //         </div>
+        //     `;
+        //             } else if (json.success) {
+        //                 // Success message
+        //                 messageDiv.innerHTML = `
+        //         <div class="text-center py-8">
+        //             <svg class="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor"
+        //                 viewBox="0 0 24 24" aria-hidden="true">
+        //                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        //                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        //             </svg>
+        //             <h3 class="text-2xl font-semibold text-gray-800 mb-2">Thank You!</h3>
+        //             <p class="text-gray-600">You've successfully joined our waitlist. We'll keep you updated!</p>
+        //         </div>
+        //     `;
+        //             } else {
+        //                 // General error message
+        //                 messageDiv.innerHTML = `
+        //         <div class="text-center py-8">
+        //             <svg class="w-16 h-16 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor"
+        //                 viewBox="0 0 24 24" aria-hidden="true">
+        //                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        //                     d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        //             </svg>
+        //             <h3 class="text-2xl font-semibold text-gray-800 mb-2">Oops!</h3>
+        //             <p class="text-gray-600">Something went wrong. Please try again later.</p>
+        //             <button onclick="location.reload()" class="mt-6 px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+        //                 Try Again
+        //             </button>
+        //         </div>
+        //     `;
+        //             }
+        //         })
+        //         .catch(error => {
+        //             console.error('Form submission error:', error);
+
+        //             // Reset button
+        //             submitButton.disabled = false;
+        //             buttonText.textContent = originalText;
+        //             submitButton.classList.remove('loading');
+
+        //             const messageDiv = document.getElementById('form-message');
+        //             messageDiv.classList.remove('hidden');
+        //             messageDiv.innerHTML = `
+        //     <div class="text-center py-8">
+        //         <svg class="w-16 h-16 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor"
+        //             viewBox="0 0 24 24" aria-hidden="true">
+        //             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        //                 d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        //         </svg>
+        //         <h3 class="text-2xl font-semibold text-gray-800 mb-2">Oops!</h3>
+        //         <p class="text-gray-600">Network error. Please try again later.</p>
+        //         <button onclick="location.reload()" class="mt-6 px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+        //             Try Again
+        //         </button>
+        //     </div>
+        // `;
+        //         });
+        // }
+
+
+        // function handleFormSubmission(form) {
+        //     const formData = new FormData(form);
+        //     const submitButton = form.querySelector('button[type="submit"]');
+        //     const buttonText = submitButton.querySelector('span');
+        //     const originalText = buttonText.textContent;
+
+        //     // Add loading state
+        //     submitButton.disabled = true;
+        //     buttonText.textContent = 'Submitting...';
+        //     submitButton.classList.add('loading');
+
+        //     // Add browser information
+        //     formData.append('source_ip', '');
+        //     formData.append('user_agent', navigator.userAgent);
+
+        //     // Convert FormData to URL-encoded string
+        //     const data = new URLSearchParams(formData);
+
+        //     fetch(form.action, {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/x-www-form-urlencoded'
+        //         },
+        //         body: data
+        //     })
+        //         .then(response => {
+        //             if (!response.ok) {
+        //                 throw new Error('Network response was not ok');
+        //             }
+        //             return response.json();
+        //         })
+        //         .then(json => {
+        //             submitButton.disabled = false;
+        //             buttonText.textContent = originalText;
+        //             submitButton.classList.remove('loading');
+
+        //             // Hide the form and show message
+        //             form.style.display = 'none';
+        //             const messageDiv = document.getElementById('form-message');
+        //             messageDiv.classList.remove('hidden');
+
+        //             if (json.isDuplicate) {
+        //                 // Show duplicate email message
+        //                 messageDiv.innerHTML = messages.duplicate;
+        //                 trackEvent('form_submission_duplicate', {
+        //                     variant: formData.get('variant')
+        //                 });
+        //             } else if (json.success) {
+        //                 // Show success message
+        //                 messageDiv.innerHTML = messages.success;
+        //                 trackEvent('form_submission_success', {
+        //                     variant: formData.get('variant')
+        //                 });
+        //             } else {
+        //                 // Show error message
+        //                 messageDiv.innerHTML = messages.error;
+        //                 trackEvent('form_submission_error', {
+        //                     variant: formData.get('variant'),
+        //                     error: json.message
+        //                 });
+        //             }
+        //         })
+        //         .catch(error => {
+        //             console.error('Form submission error:', error);
+
+        //             submitButton.disabled = false;
+        //             buttonText.textContent = originalText;
+        //             submitButton.classList.remove('loading');
+
+        //             const messageDiv = document.getElementById('form-message');
+        //             messageDiv.classList.remove('hidden');
+        //             messageDiv.innerHTML = messages.error;
+
+        //             trackEvent('form_submission_error', {
+        //                 variant: formData.get('variant'),
+        //                 error: error.message
+        //             });
+        //         });
+
+        //     // Track submission attempt
+        //     trackEvent('form_submission_attempt', {
+        //         variant: formData.get('variant')
+        //     });
+        // }
+
         function handleFormSubmission(form) {
             const formData = new FormData(form);
             const submitButton = form.querySelector('button[type="submit"]');
             const buttonText = submitButton.querySelector('span');
             const originalText = buttonText.textContent;
-            const formVariant = formData.get('variant');
 
             // Add loading state
             submitButton.disabled = true;
             buttonText.textContent = 'Submitting...';
             submitButton.classList.add('loading');
 
-            // Convert FormData to URL-encoded data
+            // Add browser information
+            formData.append('source_ip', '');
+            formData.append('user_agent', navigator.userAgent);
+
+            // Convert FormData to URL-encoded string
             const data = new URLSearchParams(formData);
 
             fetch(form.action, {
                 method: 'POST',
-                mode: 'cors', // ensures CORS is handled
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
                 body: data
             })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
                 .then(json => {
-                    // Reset button
+                    // Reset button state
                     submitButton.disabled = false;
                     buttonText.textContent = originalText;
                     submitButton.classList.remove('loading');
 
-                    // Hide the form and show a message
+                    // Hide the form and show message
                     form.style.display = 'none';
                     const messageDiv = document.getElementById('form-message');
                     messageDiv.classList.remove('hidden');
@@ -605,6 +806,9 @@
                     </button>
                 </div>
             `;
+                        trackEvent('form_submission_duplicate', {
+                            variant: formData.get('variant')
+                        });
                     } else if (json.success) {
                         // Success message
                         messageDiv.innerHTML = `
@@ -618,6 +822,9 @@
                     <p class="text-gray-600">You've successfully joined our waitlist. We'll keep you updated!</p>
                 </div>
             `;
+                        trackEvent('form_submission_success', {
+                            variant: formData.get('variant')
+                        });
                     } else {
                         // General error message
                         messageDiv.innerHTML = `
@@ -634,16 +841,21 @@
                     </button>
                 </div>
             `;
+                        trackEvent('form_submission_error', {
+                            variant: formData.get('variant'),
+                            error: json.message
+                        });
                     }
                 })
                 .catch(error => {
                     console.error('Form submission error:', error);
 
-                    // Reset button
+                    // Reset button state
                     submitButton.disabled = false;
                     buttonText.textContent = originalText;
                     submitButton.classList.remove('loading');
 
+                    // Show network error message
                     const messageDiv = document.getElementById('form-message');
                     messageDiv.classList.remove('hidden');
                     messageDiv.innerHTML = `
@@ -655,15 +867,22 @@
                 </svg>
                 <h3 class="text-2xl font-semibold text-gray-800 mb-2">Oops!</h3>
                 <p class="text-gray-600">Network error. Please try again later.</p>
-                <button onclick="location.reload()" class="mt-6 px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+                <button onclick="location.reload()" class="mt-6 px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                     Try Again
                 </button>
             </div>
         `;
+                    trackEvent('form_submission_error', {
+                        variant: formData.get('variant'),
+                        error: 'Network error: ' + error.message
+                    });
                 });
+
+            // Track submission attempt
+            trackEvent('form_submission_attempt', {
+                variant: formData.get('variant')
+            });
         }
-
-
 
         // Initialize everything when the DOM is ready
         document.addEventListener('DOMContentLoaded', () => {
