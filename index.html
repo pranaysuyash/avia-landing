@@ -1,545 +1,730 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XT9R8KQFRF"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XT9R8KQFRF');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+
+        // Initialize consent mode for EU users
+        gtag('consent', 'default', {
+            'analytics_storage': 'denied',
+            'ad_storage': 'denied'
+        });
+
+        gtag('js', new Date());
+        gtag('config', 'G-XT9R8KQFRF', {
+            // debug_mode: true,
+            send_page_view: true
+        });
+
+        // Verify GA loading with debug event
+        gtag('event', 'debug_pageview', {
+            'debug_mode': true,
+            'page_location': window.location.href,
+            'page_title': document.title
+        });
     </script>
-    
+
     <!-- Microsoft Clarity -->
     <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
         })(window, document, "clarity", "script", "okhbodwey7");
     </script>
-    
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#1e40af">
     <title>AVIA - Audio Video Image Analyzer Waitlist</title>
-    
+
     <!-- SEO Meta Tags -->
-    <meta name="description" content="AVIA offers powerful tools for uploading, organizing, and analyzing your audio, video, and image content effortlessly. Join our waitlist for early access!">
-    
+    <meta name="description"
+        content="AVIA offers powerful tools for uploading, organizing, and analyzing your audio, video, and image content effortlessly. Join our waitlist for early access!">
+
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="AVIA - Audio Video Image Analyzer">
     <meta property="og:description" content="Powerful tools for uploading, organizing, and analyzing your media files.">
-    <meta property="og:image" content="https://exploreavia.com/images/og-image.jpg">
     <meta property="og:url" content="https://www.exploreavia.com">
     <meta property="og:type" content="website">
-    
+
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="AVIA - Audio Video Image Analyzer">
-    <meta name="twitter:description" content="Powerful tools for uploading, organizing, and analyzing your media files.">
-    <meta name="twitter:image" content="https://exploreavia.com/images/twitter-image.jpg">
-    
-    <!-- Preconnect to external domains -->
+    <meta name="twitter:description"
+        content="Powerful tools for uploading, organizing, and analyzing your media files.">
+
+    <!-- Preload Critical Resources -->
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    
-    <!-- Tailwind CSS CDN -->
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome CSS CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-      /* Custom styles for transitions and visibility */
-      .hidden { display: none; }
-      .block { display: block; }
-      .transition-opacity { transition: opacity 0.5s ease-in-out; }
-      
-      /* Hero Background Images */
-      .hero-bg-a, .hero-bg-b, .hero-bg-c {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: -10;
-        opacity: 0.1;
-      }
-      .hero-bg-a.visible, .hero-bg-b.visible, .hero-bg-c.visible { opacity: 1; }
-      
-      /* Illustrations */
-      .illustration-a, .illustration-b, .illustration-c { display: none; }
-      .illustration-a.visible, .illustration-b.visible, .illustration-c.visible { display: block; }
-      
-      /* Feature Icons */
-      .feature-icon { width: 60px; height: 60px; }
-      
-      /* Full Width Images */
-      .full-width-image { width: 100%; height: auto; }
-      
-      /* Hero Section Full Viewport Height on Large Screens */
-      @media (min-width: 768px) {
-        #hero { min-height: 100vh; }
-      }
-      
-      /* Modern footer styles */
-      .footer-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 2rem;
-      }
-      .footer-card {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 1rem;
-        padding: 1.5rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-      }
-      .footer-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-      }
-      
-      /* Modern card styles for features */
-      .feature-card {
-        background: white;
-        border-radius: 1rem;
-        overflow: hidden;
-        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-      }
-      .feature-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
-      }
-      .feature-icon-wrapper {
-        background: linear-gradient(45deg, #3B82F6, #10B981);
-        padding: 1.5rem;
-        border-radius: 1rem 1rem 0 0;
-      }
-      .feature-icon {
-        filter: invert(1);
-      }
-      
-      /* Glassmorphism effect for CTA */
-      .glassmorphism {
-        background: rgba(59, 130, 246, 0.7);
-        backdrop-filter: blur(10px);
-        border-radius: 1rem;
-        padding: 2rem;
-        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-      }
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .gradient-bg {
+            background: linear-gradient(-45deg, #0ea5e9, #0369a1, #075985, #0c4a6e);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        .input-focus {
+            transition: all 0.3s ease;
+        }
+
+        .input-focus:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .scroll-smooth {
+            scroll-behavior: smooth;
+        }
+
+        /* Loading animation for form submission */
+        .loading::after {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-50 text-gray-800 scroll-smooth">
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:p-4 focus:bg-white focus:z-50">
+        Skip to main content
+    </a>
+
     <!-- Header -->
-    <header class="bg-blue-600 text-white py-4">
-        <div class="container mx-auto flex justify-between items-center px-4">
-            <h1 class="text-2xl font-bold">AVIA</h1>
-            <nav class="space-x-4">
-                <!-- Future navigation links can be added here -->
+    <header class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 py-4">
+            <nav class="flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold text-primary-600 hover:text-primary-700 transition">AVIA</a>
+                <div class="space-x-6">
+                    <a href="#features" class="text-gray-600 hover:text-primary-600 transition">Features</a>
+                    <a href="#waitlist"
+                        class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition">Join
+                        Waitlist</a>
+                </div>
             </nav>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section id="hero" class="text-center py-20 bg-white relative">
-        <!-- Background Images -->
-        <img src="https://cdn.midjourney.com/a3c482f6-296f-4f70-bb05-25172ae837c9/0_2.png" alt="Hero Background Variant A" class="hero-bg-a variant-a hidden object-cover" loading="lazy">
-        <img src="https://cdn.midjourney.com/d4e55257-0028-4d85-be6d-20c6f563f14f/0_1.png" alt="Hero Background Variant B" class="hero-bg-b variant-b hidden object-cover" loading="lazy">
-        <img src="https://cdn.midjourney.com/d4e55257-0028-4d85-be6d-20c6f563f14f/0_1.png" alt="Hero Background Variant C" class="hero-bg-c variant-c hidden object-cover" loading="lazy">
-        
-        <div class="container mx-auto px-4 relative z-10">
-            <!-- Variant A: Benefit-Focused -->
-            <div class="variant variant-a hidden transition-opacity duration-500">
-                <h2 class="text-4xl font-semibold mb-4">Transform Your Media into Actionable Insights</h2>
-                <p class="text-xl mb-8">Advanced tools for uploading, organizing, and analyzing your audio, video, and image content.</p>
-                <a href="#waitlist" class="cta bg-green-500 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-green-600 transition">Join the Waitlist</a>
+    <!-- Main Content -->
+    <main id="main-content" class="pt-20">
+        <!-- Hero Section -->
+        <section class="gradient-bg text-white py-24 lg:py-32">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in">
+                        Transform Your Media into Actionable Insights
+                    </h1>
+                    <p class="text-xl md:text-2xl mb-8 text-gray-100 animate-slide-up">
+                        Advanced tools for uploading, organizing, and analyzing your audio, video, and image content.
+                    </p>
+                    <a href="#waitlist"
+                        class="inline-block bg-white text-primary-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition transform hover:-translate-y-1 hover:shadow-lg">
+                        Get Early Access
+                    </a>
+                </div>
             </div>
-            
-            <!-- Variant B: Problem-Solution -->
-            <div class="variant variant-b hidden transition-opacity duration-500">
-                <h2 class="text-4xl font-semibold mb-4">Struggling to Manage and Analyze Your Media?</h2>
-                <p class="text-xl mb-8">AVIA simplifies media processing with powerful analysis tools.</p>
-                <a href="#waitlist" class="cta bg-blue-500 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-600 transition">Get Early Access</a>
-            </div>
-            
-            <!-- Variant C: Persona-Specific -->
-            <div class="variant variant-c hidden transition-opacity duration-500">
-                <h2 class="text-4xl font-semibold mb-4">Empower Your Media Management</h2>
-                <p class="text-xl mb-8">Advanced tools for professionals to upload, organize, and analyze audio, video, and image content.</p>
-                <a href="#waitlist" class="cta bg-orange-500 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-orange-600 transition">Start Your Free Trial</a>
-            </div>
-        </div>
-        
-        <!-- Hero Illustrations -->
-        <div class="mt-10 flex justify-center">
-            <img src="https://cdn.midjourney.com/39d6e169-40d4-4be9-a982-6fdd263c6586/0_0.png" alt="Media Dashboard" class="illustration illustration-a rounded-lg shadow-lg w-full max-w-6xl hidden" loading="lazy">
-            <img src="https://cdn.midjourney.com/c9ef8118-1e11-4026-ade2-f02d0bd6044f/0_3.png" alt="User-Centric Collaboration" class="illustration illustration-b rounded-lg shadow-lg w-full max-w-6xl hidden" loading="lazy">
-            <img src="https://cdn.midjourney.com/7eb29558-813a-4bf1-8e53-12d93310945e/0_2.png" alt="Technology Processing" class="illustration illustration-c rounded-lg shadow-lg w-full max-w-6xl hidden" loading="lazy">
-        </div>
-    </section>
+        </section>
 
-    <!-- Modernized Features Section -->
-    <section id="features" class="py-20 bg-gray-100">
+        <!-- Features Section -->
+        <section id="features" class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Powerful Features</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Feature Cards -->
+                    <div class="feature-card bg-white rounded-xl shadow-md overflow-hidden">
+                        <div class="p-6">
+                            <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">Media Organization</h3>
+                            <p class="text-gray-600">Effortlessly organize and manage your media files with AI-powered
+                                tools.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-card bg-white rounded-xl shadow-md overflow-hidden">
+                        <div class="p-6">
+                            <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">Advanced Analytics</h3>
+                            <p class="text-gray-600">Gain valuable insights from your media content with comprehensive
+                                analysis tools.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-card bg-white rounded-xl shadow-md overflow-hidden">
+                        <div class="p-6">
+                            <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">Custom Workflow</h3>
+                            <p class="text-gray-600">Tailor the platform to your needs with customizable settings and
+                                automation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Waitlist Section -->
+        <section id="waitlist" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="max-w-lg mx-auto">
+                    <div class="bg-white rounded-2xl shadow-xl p-8">
+                        <h2 class="text-3xl font-bold text-center mb-2">Join Our Waitlist</h2>
+                        <p class="text-gray-600 text-center mb-8">Be among the first to experience AVIA</p>
+
+                        <!-- Form Variants -->
+                        <div class="form form-a hidden">
+                            <form id="waitlist-form-a" class="space-y-4"
+                                action="https://script.google.com/macros/s/AKfycbw9YJAlC2yFqxdNFU54OwOJ6ZrnngqmLhEkFRpNpJkDQiOt4URxWCWl2ZaprJbMUMwf/exec"
+                                method="POST">
+                                <!-- Add this in your form section -->
+                                <noscript>
+                                    <div class="text-center p-4 bg-yellow-100 text-yellow-800 rounded-lg">
+                                        Please enable JavaScript to join our waitlist, or contact us directly at
+                                        founder@psrstech.com
+                                    </div>
+                                </noscript>
+                                <div>
+                                    <label for="name-a"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                    <input type="text" id="name-a" name="name" required
+                                        class="input-focus w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                                </div>
+
+                                <div>
+                                    <label for="email-a"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                    <input type="email" id="email-a" name="email" required
+                                        class="input-focus w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                                </div>
+
+                                <input type="hidden" id="variant-a" name="variant" value="A">
+
+                                <button type="submit"
+                                    class="w-full bg-primary-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-primary-700 transition transform hover:-translate-y-1 flex justify-center items-center">
+                                    <span>Join Waitlist</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Variant B: Detailed Form -->
+                        <div class="form form-b hidden">
+                            <form id="waitlist-form-b" class="space-y-4"
+                                action="https://script.google.com/macros/s/AKfycbw9YJAlC2yFqxdNFU54OwOJ6ZrnngqmLhEkFRpNpJkDQiOt4URxWCWl2ZaprJbMUMwf/exec"
+                                method="POST">
+                                <div class="grid grid-cols-1 gap-4">
+                                    <div>
+                                        <label for="name-b"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                        <input type="text" id="name-b" name="name" required
+                                            class="input-focus w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                                    </div>
+
+                                    <div>
+                                        <label for="email-b"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                        <input type="email" id="email-b" name="email" required
+                                            class="input-focus w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                                    </div>
+
+                                    <div>
+                                        <label for="industry"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Industry</label>
+                                        <select id="industry" name="industry" required
+                                            class="input-focus w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                                            <option value="" disabled selected>Select Your Industry</option>
+                                            <option value="education">Education</option>
+                                            <option value="project_management">Project Management</option>
+                                            <option value="product_management">Product Management</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+
+                                    <div id="other-industry-container" class="hidden">
+                                        <label for="industry-other"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Specify
+                                            Industry</label>
+                                        <input type="text" id="industry-other" name="industry_other"
+                                            class="input-focus w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                                    </div>
+                                </div>
+
+                                <input type="hidden" id="variant-b" name="variant" value="B">
+
+                                <button type="submit"
+                                    class="w-full bg-primary-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-primary-700 transition transform hover:-translate-y-1 flex justify-center items-center">
+                                    <span>Join Waitlist</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Variant C: Minimal Form -->
+                        <div class="form form-c hidden">
+                            <form id="waitlist-form-c" class="space-y-4"
+                                action="https://script.google.com/macros/s/AKfycbw9YJAlC2yFqxdNFU54OwOJ6ZrnngqmLhEkFRpNpJkDQiOt4URxWCWl2ZaprJbMUMwf/exec"
+                                method="POST">
+                                <div>
+                                    <label for="email-c"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                    <input type="email" id="email-c" name="email" required
+                                        class="input-focus w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                                </div>
+
+                                <input type="hidden" id="variant-c" name="variant" value="C">
+
+                                <button type="submit"
+                                    class="w-full bg-primary-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-primary-700 transition transform hover:-translate-y-1 flex justify-center items-center">
+                                    <span>Join Waitlist</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Success Message -->
+                        <div id="form-message" class="hidden">
+                            <div class="text-center py-8">
+                                <svg class="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <h3 class="text-2xl font-semibold text-gray-800 mb-2">Thank You!</h3>
+                                <p class="text-gray-600">You've successfully joined our waitlist. We'll keep you
+                                    updated!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="max-w-2xl mx-auto text-center">
+                    <h2 class="text-3xl font-bold mb-4">Get in Touch</h2>
+                    <p class="text-gray-600 mb-8">Have questions? We're here to help!</p>
+                    <div class="space-y-4">
+                        <div>
+                            <a href="mailto:founder@psrstech.com"
+                                class="text-primary-600 hover:text-primary-700 flex items-center justify-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                                founder@psrstech.com
+                            </a>
+                        </div>
+                        <div>
+                            <a href="tel:+919910403502"
+                                class="text-primary-600 hover:text-primary-700 flex items-center justify-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                </svg>
+                                +91 9910403502
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Feature 1: Organized Library -->
-                <div class="feature-card">
-                    <div class="feature-icon-wrapper flex justify-center">
-                        <img src="https://cdn.midjourney.com/3267d533-4b19-4c3d-b5b7-242c212399cd/0_1.png" alt="Organized Library" class="feature-icon" loading="lazy">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">AVIA</h3>
+                        <p class="text-gray-400 mb-6">Advanced tools for media management and analysis.</p>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Organized Library</h3>
-                        <p class="text-gray-600">Easily upload and categorize your media files for quick access and management.</p>
-                    </div>
-                </div>
-                <!-- Feature 2: Advanced Search -->
-                <div class="feature-card">
-                    <div class="feature-icon-wrapper flex justify-center">
-                        <img src="https://cdn.midjourney.com/3267d533-4b19-4c3d-b5b7-242c212399cd/0_1.png" alt="Advanced Search" class="feature-icon" loading="lazy">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Advanced Search</h3>
-                        <p class="text-gray-600">Utilize our powerful search tools to find specific files or information effortlessly.</p>
+                    <div class="grid grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                            <ul class="space-y-2">
+                                <li><a href="#" class="text-gray-400 hover:text-white transition">Home</a></li>
+                                <li><a href="#features" class="text-gray-400 hover:text-white transition">Features</a>
+                                </li>
+                                <li><a href="#waitlist" class="text-gray-400 hover:text-white transition">Join
+                                        Waitlist</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <!-- Feature 3: Comprehensive Analysis -->
-                <div class="feature-card">
-                    <div class="feature-icon-wrapper flex justify-center">
-                        <img src="https://cdn.midjourney.com/519e2b01-cd1c-414b-847e-51ef245196d1/0_0.png" alt="Comprehensive Analysis" class="feature-icon" loading="lazy">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Comprehensive Analysis</h3>
-                        <p class="text-gray-600">Perform in-depth analyses on your media files to gain valuable insights.</p>
-                    </div>
-                </div>
-                <!-- Feature 4: Custom Settings -->
-                <div class="feature-card">
-                    <div class="feature-icon-wrapper flex justify-center">
-                        <img src="https://cdn.midjourney.com/e93aaa6e-68cf-403a-a1f9-88615e631b5d/0_2.png" alt="Custom Settings" class="feature-icon" loading="lazy">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Custom Settings</h3>
-                        <p class="text-gray-600">Tailor the platform to your specific needs with customizable settings and preferences.</p>
-                    </div>
+                <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                    <p>&copy; <span id="current-year"></span> AVIA. All rights reserved.</p>
                 </div>
             </div>
         </div>
-    </section>
+    </footer>
+    <script>
+        // Utility functions
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
 
-    <!-- Waitlist Section -->
-    <section id="waitlist" class="py-20 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="max-w-lg mx-auto text-center">
-                <!-- Incentive Messaging Variations -->
-                <div class="incentive incentive-a text-center mb-6 hidden">
-                    <p class="text-green-600 font-semibold">Sign up now and enjoy a free trial at launch!</p>
-                </div>
-                <div class="incentive incentive-b text-center mb-6 hidden">
-                    <p class="text-blue-600 font-semibold">Join the waitlist today and receive exclusive discounts upon launch.</p>
-                </div>
-                <div class="incentive incentive-c text-center mb-6 hidden">
-                    <p class="text-red-600 font-semibold">Limited-time offer: 20% off for the first 100 signups.</p>
-                </div>
+        // Message templates
+        const messages = {
+            success: `
+        <div class="text-center py-8" role="alert" aria-live="polite">
+            <svg class="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <h3 class="text-2xl font-semibold text-gray-800 mb-2">Thank You!</h3>
+            <p class="text-gray-600">You've successfully joined our waitlist. We'll keep you updated!</p>
+        </div>
+    `,
+            duplicate: `
+        <div class="text-center py-8" role="alert" aria-live="polite">
+            <svg class="w-16 h-16 text-blue-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <h3 class="text-2xl font-semibold text-gray-800 mb-2">Already Registered!</h3>
+            <p class="text-gray-600">You're already on our waitlist. We'll notify you when AVIA launches!</p>
+            <button onclick="location.reload()" class="mt-6 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Try Different Email
+            </button>
+        </div>
+    `,
+            error: `
+        <div class="text-center py-8" role="alert" aria-live="assertive">
+            <svg class="w-16 h-16 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <h3 class="text-2xl font-semibold text-gray-800 mb-2">Oops!</h3>
+            <p class="text-gray-600">Something went wrong. Please try again later.</p>
+            <button onclick="location.reload()" class="mt-6 px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                Try Again
+            </button>
+        </div>
+    `
+        };
 
-                <h2 class="text-3xl font-semibold mb-4">Join Our Waitlist</h2>
-                <p class="text-lg mb-6">Be the first to experience AVIA. Join our waitlist to get early access and exclusive updates.</p>
-                
-                <!-- Forms Variations -->
-                <!-- Variant A: Simple Form -->
-                <div class="form form-a hidden">
-                    <form id="waitlist-form-a" class="space-y-4" action="https://script.google.com/macros/s/AKfycbw9YJAlC2yFqxdNFU54OwOJ6ZrnngqmLhEkFRpNpJkDQiOt4URxWCWl2ZaprJbMUMwf/exec" method="POST">
-                        <label for="name-a" class="sr-only">Your Name</label>
-                        <input type="text" id="name-a" name="name" placeholder="Your Name" required
-                            class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Your Name">
-                        
-                        <label for="email-a" class="sr-only">Your Email</label>
-                        <input type="email" id="email-a" name="email" placeholder="you@example.com" required
-                            class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Your Email">
-                        
-                        <input type="hidden" id="variant-a" name="variant" value="A">
-                        
-                        <button type="submit"
-                            class="w-full bg-green-500 text-white px-4 py-3 rounded-full text-lg font-semibold hover:bg-green-600 transition">Join Waitlist</button>
-                    </form>
-                </div>
-                
-                <!-- Variant B: Detailed Form -->
-                <div class="form form-b hidden">
-                    <form id="waitlist-form-b" class="space-y-4" action="https://script.google.com/macros/s/AKfycbw9YJAlC2yFqxdNFU54OwOJ6ZrnngqmLhEkFRpNpJkDQiOt4URxWCWl2ZaprJbMUMwf/exec" method="POST">
-                        <label for="name-b" class="sr-only">Your Name</label>
-                        <input type="text" id="name-b" name="name" placeholder="Your Name" required
-                            class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Your Name">
-                        
-                        <label for="email-b" class="sr-only">Your Email</label>
-                        <input type="email" id="email-b" name="email" placeholder="you@example.com" required
-                            class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Your Email">
-                        
-                        <label for="industry" class="sr-only">Select Your Industry</label>
-                        <select id="industry" name="industry" required
-                            class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Select Your Industry">
-                            <option value="" disabled selected>Select Your Industry</option>
-                            <option value="education">Education</option>
-                            <option value="project_management">Project Management</option>
-                            <option value="product_management">Product Management</option>
-                            <option value="other">Other</option>
-                        </select>
-                        
-                        <div id="other-industry-container" class="hidden">
-                            <label for="industry-other" class="sr-only">Please specify your industry</label>
-                            <input type="text" id="industry-other" name="industry_other" placeholder="Please specify your industry"
-                                class="w-full px-4 py-3 border
-class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Specify Your Industry">
-</div>
+        // Enhanced tracking helper
+        function trackEvent(eventName, params = {}) {
+            if (typeof gtag === 'function') {
+                gtag('event', eventName, {
+                    ...params,
+                    timestamp: new Date().toISOString(),
+                    page_url: window.location.href
+                });
+            }
+        }
 
-<label for="referred-by" class="sr-only">Referred By (Optional)</label>
-<input type="text" id="referred-by" name="referred_by" placeholder="Referred By (Optional)"
-    class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Referred By">
+        // Cookie functions
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
 
-<input type="hidden" id="variant-b" name="variant" value="B">
+        function setCookie(name, value, days) {
+            const d = new Date();
+            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + d.toUTCString();
+            document.cookie = `${name}=${value};${expires};path=/`;
+        }
+        let variant;
+        // A/B Testing functions
+        function assignVariant() {
+            const variants = ['a', 'b', 'c'];
+            return variants[Math.floor(Math.random() * variants.length)];
+        }
 
-<button type="submit"
-    class="w-full bg-green-500 text-white px-4 py-3 rounded-full text-lg font-semibold hover:bg-green-600 transition">Join Waitlist</button>
-</form>
-</div>
+        function showVariant(variant) {
+            document.querySelectorAll('.form-a, .form-b, .form-c').forEach(el => {
+                el.classList.add('hidden');
+            });
 
-<!-- Variant C: Minimalist Form -->
-<div class="form form-c hidden">
-<form id="waitlist-form-c" class="space-y-4" action="https://script.google.com/macros/s/AKfycbw9YJAlC2yFqxdNFU54OwOJ6ZrnngqmLhEkFRpNpJkDQiOt4URxWCWl2ZaprJbMUMwf/exec" method="POST">
-<label for="email-c" class="sr-only">Your Email</label>
-<input type="email" id="email-c" name="email" placeholder="you@example.com" required
-    class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Your Email">
+            const selectedForm = document.querySelector(`.form-${variant}`);
+            if (selectedForm) {
+                selectedForm.classList.remove('hidden');
+            }
 
-<input type="hidden" id="variant-c" name="variant" value="C">
+            trackEvent('variant_assigned', {
+                variant: variant.toUpperCase()
+            });
+        }
 
-<button type="submit"
-    class="w-full bg-green-500 text-white px-4 py-3 rounded-full text-lg font-semibold hover:bg-green-600 transition">Join Waitlist</button>
-</form>
-</div>
+        // Form submission handler
+        function handleFormSubmission(form) {
+            const formData = new FormData(form);
+            const submitButton = form.querySelector('button[type="submit"]');
+            const buttonText = submitButton.querySelector('span');
+            const originalText = buttonText.textContent;
 
-<!-- Success Message -->
-<p id="form-message" class="mt-4 text-green-500 hidden">Thank you for joining the waitlist!</p>
-</div>
-</div>
-</section>
+            // Add loading state
+            submitButton.disabled = true;
+            buttonText.textContent = 'Submitting...';
+            submitButton.classList.add('loading');
 
-<!-- Privacy Policy Section -->
-<section id="privacy" class="py-20 bg-gray-100">
-<div class="container mx-auto px-4">
-<div class="max-w-2xl mx-auto">
-<h2 class="text-3xl font-semibold mb-4">Privacy Policy</h2>
-<p class="text-gray-600 mb-2">
-At AVIA, we respect your privacy and are committed to protecting your personal information. The data you provide when joining our waitlist will be used solely for the purpose of granting early access to our platform and keeping you informed about updates and new features.
-</p>
-<p class="text-gray-600">
-We do not share your information with third parties without your consent. For more details, please contact us at <a href="mailto:privacy@avia.com" class="text-blue-600 underline">privacy@avia.com</a>.
-</p>
-</div>
-</div>
-</section>
+            trackEvent('form_submit_attempt', {
+                form_id: form.id,
+                variant: variant.toUpperCase()
+            });
 
-<!-- Modernized CTA Section -->
-<section class="py-20 bg-blue-600 text-white text-center relative overflow-hidden">
-<div class="absolute inset-0 z-0">
-<img src="https://cdn.midjourney.com/d4e55257-0028-4d85-be6d-20c6f563f14f/0_1.png" alt="CTA Background" class="w-full h-full object-cover opacity-50" loading="lazy">
-</div>
-<div class="container mx-auto px-4 relative z-10">
-<div class="glassmorphism inline-block">
-<h2 class="text-3xl font-semibold mb-4">Ready to streamline your media workflow?</h2>
-<a href="#waitlist" class="bg-white text-blue-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-opacity-90 transition">Sign Up Now</a>
-</div>
-</div>
-</section>
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.includes("application/json")) {
+                    return response.json();
+                }
+                throw new TypeError("Oops, we haven't got JSON!");
+            }).then(data => {
+                form.style.display = 'none';
+                const messageDiv = document.getElementById('form-message');
+                messageDiv.classList.remove('hidden');
 
-<!-- Modernized Footer -->
-<footer class="bg-gray-800 text-white py-12 relative">
-<div class="container mx-auto px-4">
-<div class="footer-grid">
-<div class="footer-card">
-<h3 class="text-xl font-semibold mb-4">About AVIA</h3>
-<p class="text-gray-300">Empowering media professionals with cutting-edge AI-driven analysis tools.</p>
-</div>
-<div class="footer-card">
-<h3 class="text-xl font-semibold mb-4">Quick Links</h3>
-<ul class="space-y-2">
-<li><a href="#" class="text-gray-300 hover:text-white transition">Home</a></li>
-<li><a href="#features" class="text-gray-300 hover:text-white transition">Features</a></li>
-<li><a href="#waitlist" class="text-gray-300 hover:text-white transition">Join Waitlist</a></li>
-<li><a href="#privacy" class="text-gray-300 hover:text-white transition">Privacy Policy</a></li>
-</ul>
-</div>
-<div class="footer-card">
-<h3 class="text-xl font-semibold mb-4">Contact Us</h3>
-<p class="text-gray-300">Email: info@avia.com</p>
-<p class="text-gray-300">Phone: +1 (555) 123-4567</p>
-</div>
-<div class="footer-card">
-<h3 class="text-xl font-semibold mb-4">Follow Us</h3>
-<div class="flex space-x-4">
-<a href="#" class="text-gray-300 hover:text-white transition"><i class="fab fa-twitter"></i></a>
-<a href="#" class="text-gray-300 hover:text-white transition"><i class="fab fa-linkedin"></i></a>
-<a href="#" class="text-gray-300 hover:text-white transition"><i class="fab fa-facebook"></i></a>
-</div>
-</div>
-</div>
-<div class="mt-8 text-center text-gray-400">
-<p>&copy; <span id="current-year"></span> AVIA. All rights reserved.</p>
-<p class="text-sm mt-2">Powered by PSRS Technologies Pvt Ltd.</p>
-</div>
-</div>
-</footer>
+                if (data.isDuplicate) {
+                    messageDiv.innerHTML = messages.duplicate;
+                    trackEvent('duplicate_signup_attempt', {
+                        form_id: form.id,
+                        variant: variant.toUpperCase()
+                    });
+                } else {
+                    messageDiv.innerHTML = messages.success;
+                    trackEvent('signup_success', {
+                        form_id: form.id,
+                        variant: variant.toUpperCase()
+                    });
+                }
+            }).catch(error => {
+                console.error('Form submission error:', error);
 
-<!-- JavaScript -->
-<script>
-// Set current year in footer
-document.getElementById('current-year').textContent = new Date().getFullYear();
+                trackEvent('form_error', {
+                    error_type: 'submission_failed',
+                    error_message: error.message,
+                    form_id: form.id
+                });
 
-// Function to get a cookie by name
-function getCookie(name) {
-const value = `; ${document.cookie}`;
-const parts = value.split(`; ${name}=`);
-if (parts.length === 2) return parts.pop().split(';').shift();
-return null;
-}
+                submitButton.disabled = false;
+                buttonText.textContent = originalText;
+                submitButton.classList.remove('loading');
 
-// Function to set a cookie
-function setCookie(name, value, days) {
-const d = new Date();
-d.setTime(d.getTime() + (days*24*60*60*1000));
-const expires = "expires="+ d.toUTCString();
-document.cookie = `${name}=${value};${expires};path=/`;
-}
+                const messageDiv = document.getElementById('form-message');
+                messageDiv.classList.remove('hidden');
+                messageDiv.innerHTML = messages.error;
+            });
+        }
 
-// Function to randomly assign a variant
-function assignVariant() {
-const variants = ['a', 'b', 'c']; // Variants A, B, C
-const randomIndex = Math.floor(Math.random() * variants.length);
-return variants[randomIndex];
-}
+        // Initialize everything when the DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set current year
+            document.getElementById('current-year').textContent = new Date().getFullYear();
 
-// Get or assign variant
-let variant = getCookie('avia_variant');
-if (!variant) {
-variant = assignVariant();
-setCookie('avia_variant', variant, 30); // Cookie expires in 30 days
-}
+            // Initialize variant
+            let variant = getCookie('avia_variant');
+            if (!variant) {
+                variant = assignVariant();
+                setCookie('avia_variant', variant, 30);
+            }
 
-// Function to show the selected variant
-function showVariant(variant) {
-// Hide all elements related to variants
-document.querySelectorAll('.variant-a, .variant-b, .variant-c, .form-a, .form-b, .form-c, .illustration-a, .illustration-b, .illustration-c, .incentive-a, .incentive-b, .incentive-c, .hero-bg-a, .hero-bg-b, .hero-bg-c, .cta-bg').forEach(el => {
-el.classList.add('hidden');
-el.classList.remove('block');
-});
+            showVariant(variant);
 
-// Show selected variant elements
-document.querySelectorAll(`.variant-${variant}, .form-${variant}, .illustration-${variant}, .incentive-${variant}, .hero-bg-${variant}`).forEach(el => {
-el.classList.remove('hidden');
-el.classList.add('block');
-});
+            // Set variant in hidden fields
+            document.querySelectorAll('[name="variant"]').forEach(input => {
+                input.value = variant.toUpperCase();
+            });
 
-// Always show CTA background image
-const ctaBg = document.querySelector('.cta-bg');
-if (ctaBg) {
-ctaBg.classList.remove('hidden');
-ctaBg.classList.add('block');
-}
+            // Form submission handling
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    handleFormSubmission(this);
+                });
+            });
 
-// Track variant assignment in Google Analytics
-if (typeof gtag === 'function') {
-gtag('event', 'variant_assigned', {
-'variant': variant.toUpperCase()
-});
-}
-}
+            // Track scroll depth
+            let maxScroll = 0;
+            let scrollThresholds = [25, 50, 75, 100];
 
-// Function to toggle the "Other" industry input field
-function toggleOtherIndustry() {
-const industrySelect = document.getElementById('industry');
-const otherIndustryContainer = document.getElementById('other-industry-container');
-const otherIndustryInput = document.getElementById('industry-other');
+            window.addEventListener('scroll', debounce(() => {
+                const scrollPercent = Math.round((window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100);
 
-if (industrySelect) {
-industrySelect.addEventListener('change', function() {
-if (this.value === 'other') {
-otherIndustryContainer.classList.remove('hidden');
-otherIndustryInput.setAttribute('required', 'required');
-otherIndustryContainer.classList.add('block');
-} else {
-otherIndustryContainer.classList.add('hidden');
-otherIndustryInput.removeAttribute('required');
-otherIndustryInput.value = '';
-otherIndustryContainer.classList.remove('block');
-}
-});
-}
-}
+                if (scrollPercent > maxScroll) {
+                    maxScroll = scrollPercent;
 
-// Function to safely add event listeners
-function addEventListenerIfExists(selector, event, handler) {
-const element = document.querySelector(selector);
-if (element) {
-element.addEventListener(event, handler);
-}
-}
+                    scrollThresholds.forEach((threshold, index) => {
+                        if (scrollPercent >= threshold) {
+                            trackEvent('scroll_depth', {
+                                scroll_percent: threshold,
+                                page_path: window.location.pathname
+                            });
+                            scrollThresholds.splice(index, 1);
+                        }
+                    });
+                }
+            }, 250));
 
-// Document Ready
-document.addEventListener('DOMContentLoaded', () => {
-// Assign variant to hidden fields
-document.querySelectorAll('[name="variant"]').forEach(input => {
-input.value = variant.toUpperCase();
-});
+            // Track CTA clicks
+            document.querySelectorAll('.cta').forEach(cta => {
+                cta.addEventListener('click', function (e) {
+                    trackEvent('cta_click', {
+                        cta_text: this.textContent.trim(),
+                        cta_location: this.getAttribute('href'),
+                        variant: variant.toUpperCase()
+                    });
+                });
+            });
 
-// Show the selected variant
-showVariant(variant);
+            // Initialize industry selector
+            const industrySelect = document.getElementById('industry');
+            const otherIndustryContainer = document.getElementById('other-industry-container');
 
-// Attach event listeners to CTA buttons
-addEventListenerIfExists('.cta', 'click', function() {
-if (typeof gtag === 'function') {
-gtag('event', 'cta_click', {
-'event_category': 'CTA',
-'event_label': `Variant ${variant.toUpperCase()} - Clicked CTA`,
-'value': 1
-});
-}
-});
+            if (industrySelect && otherIndustryContainer) {
+                industrySelect.addEventListener('change', function () {
+                    if (this.value === 'other') {
+                        otherIndustryContainer.classList.remove('hidden');
+                        document.getElementById('industry-other').required = true;
+                    } else {
+                        otherIndustryContainer.classList.add('hidden');
+                        document.getElementById('industry-other').required = false;
+                    }
+                });
+            }
 
-// Initialize the "Other" industry toggle functionality
-toggleOtherIndustry();
+            // Track form field interactions
+            document.querySelectorAll('input, select').forEach(field => {
+                field.addEventListener('focus', function () {
+                    if (!this.dataset.tracked) {
+                        trackEvent('form_field_focus', {
+                            field_type: this.type,
+                            field_name: this.name,
+                            form_id: this.closest('form').id,
+                            variant: variant.toUpperCase()
+                        });
+                        this.dataset.tracked = 'true';
+                    }
+                });
+            });
 
-// Form submission handling
-document.querySelectorAll('form').forEach(form => {
-form.addEventListener('submit', function(e) {
-e.preventDefault();
-const formData = new FormData(this);
+            // Initialize smooth scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 
-fetch(this.action, {
-method: 'POST',
-body: formData,
-mode: 'no-cors'
-}).then(() => {
-// Show success message
-document.getElementById('form-message').classList.remove('hidden');
-// Hide the form
-this.classList.add('hidden');
-// Track form submission in Google Analytics
-if (typeof gtag === 'function') {
-    gtag('event', 'form_submission', {
-        'event_category': 'Waitlist',
-        'event_label': `Variant ${variant.toUpperCase()} - Form Submitted`
-    });
-}
-}).catch(error => {
-console.error('Error:', error);
-alert('An error occurred. Please try again later.');
-});
-});
-});
-});
-</script>
 </body>
+
 </html>
