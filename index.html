@@ -458,6 +458,8 @@
         </div>
     </footer>
     <script>
+        let variant;
+
         // Utility functions
         function debounce(func, wait) {
             let timeout;
@@ -533,7 +535,6 @@
             const expires = "expires=" + d.toUTCString();
             document.cookie = `${name}=${value};${expires};path=/`;
         }
-        let variant;
         // A/B Testing functions
         function assignVariant() {
             const variants = ['a', 'b', 'c'];
@@ -558,6 +559,8 @@
         // Form submission handler
         function handleFormSubmission(form) {
             const formData = new FormData(form);
+            const formVariant = formData.get('variant'); // Get variant from form data
+
             const submitButton = form.querySelector('button[type="submit"]');
             const buttonText = submitButton.querySelector('span');
             const originalText = buttonText.textContent;
@@ -569,7 +572,7 @@
 
             trackEvent('form_submit_attempt', {
                 form_id: form.id,
-                variant: variant.toUpperCase()
+                variant: formVariant
             });
 
             fetch(form.action, {
