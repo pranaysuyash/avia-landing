@@ -3,28 +3,32 @@
 
 <head>
     <!-- Google Analytics -->
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XT9R8KQFRF"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
 
-        // Initialize consent mode for EU users
+        // Initialize consent mode - keep this granted
         gtag('consent', 'default', {
-            'analytics_storage': 'denied',
-            'ad_storage': 'denied'
+            'analytics_storage': 'granted',
+            'ad_storage': 'granted'
         });
 
         gtag('js', new Date());
         gtag('config', 'G-XT9R8KQFRF', {
-            // debug_mode: true,
-            send_page_view: true
+            debug_mode: true,
+            send_page_view: true,
+            cookie_flags: 'samesite=none;secure',
+            cookie_domain: 'exploreavia.com'
         });
 
-        // Verify GA loading with debug event
+        // Debug pageview for verification
         gtag('event', 'debug_pageview', {
             'debug_mode': true,
             'page_location': window.location.href,
-            'page_title': document.title
+            'page_title': document.title,
+            'send_to': 'G-XT9R8KQFRF'
         });
     </script>
 
@@ -457,7 +461,7 @@
             </div>
         </div>
     </footer>
-    <script>
+    <!-- <script>
         let variant;
 
         // Utility functions
@@ -987,6 +991,369 @@
                         });
                     }
                 });
+            });
+        }); -->
+
+    <script>
+        //--------- Cookie Management ---------//
+        function setCookie(name, value, days) {
+            const d = new Date();
+            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = `expires=${d.toUTCString()}`;
+            document.cookie = `${name}=${value};${expires};path=/;SameSite=Lax`;
+        }
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
+
+        //--------- Utility Functions ---------//
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        //--------- Message Templates ---------//
+        const messages = {
+            success: `
+                    <div class="text-center py-8" role="alert" aria-live="polite">
+                        <svg class="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-2">Thank You!</h3>
+                        <p class="text-gray-600">You've successfully joined our waitlist. We'll keep you updated!</p>
+                    </div>
+                `,
+            duplicate: `
+                    <div class="text-center py-8" role="alert" aria-live="polite">
+                        <svg class="w-16 h-16 text-blue-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-2">Already Registered!</h3>
+                        <p class="text-gray-600">You're already on our waitlist. We'll notify you when AVIA launches!</p>
+                        <button onclick="location.reload()" class="mt-6 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            Try Different Email
+                        </button>
+                    </div>
+                `,
+            error: `
+                    <div class="text-center py-8" role="alert" aria-live="assertive">
+                        <svg class="w-16 h-16 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-2">Oops!</h3>
+                        <p class="text-gray-600">Something went wrong. Please try again later.</p>
+                        <button onclick="location.reload()" class="mt-6 px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                            Try Again
+                        </button>
+                    </div>
+                `
+        };
+
+        //--------- Enhanced Event Tracking ---------//
+        function trackEvent(eventName, params = {}) {
+            if (typeof gtag === 'function') {
+                const enhancedParams = {
+                    ...params,
+                    timestamp: new Date().toISOString(),
+                    page_url: window.location.href,
+                    page_title: document.title,
+                    client_id: getCookie('_ga'),
+                    session_id: getCookie('_ga_' + 'XT9R8KQFRF'.replace(/-/g, '')),
+                    send_to: 'G-XT9R8KQFRF'
+                };
+
+                gtag('event', eventName, enhancedParams);
+
+                // Debug logging
+                console.log('GA Event Fired:', {
+                    eventName,
+                    ...enhancedParams,
+                    variant: getCookie('avia_variant')
+                });
+            }
+        }
+
+        //--------- A/B Testing Functions ---------//
+        function assignVariant() {
+            const storedVariant = getCookie('avia_variant');
+            if (storedVariant && ['a', 'b', 'c'].includes(storedVariant.toLowerCase())) {
+                console.log('Using stored variant:', storedVariant);
+                return storedVariant.toLowerCase();
+            }
+
+            // Weighted distribution: 40% A, 40% B, 20% C
+            const rand = Math.random();
+            let newVariant;
+            if (rand < 0.4) newVariant = 'a';
+            else if (rand < 0.8) newVariant = 'b';
+            else newVariant = 'c';
+
+            setCookie('avia_variant', newVariant, 30);
+
+            // Track variant assignment
+            trackEvent('variant_assigned', {
+                event_category: 'A/B Testing',
+                event_label: newVariant.toUpperCase(),
+                variant: newVariant.toUpperCase(),
+                non_interaction: true
+            });
+
+            console.log('Assigned new variant:', newVariant);
+            return newVariant;
+        }
+
+        function showVariant(variant) {
+            document.querySelectorAll('.form-a, .form-b, .form-c').forEach(el => {
+                el.classList.add('hidden');
+            });
+
+            const selectedForm = document.querySelector(`.form-${variant}`);
+            if (selectedForm) {
+                selectedForm.classList.remove('hidden');
+            }
+        }
+
+        //--------- Form Submission Handler ---------//
+        function handleFormSubmission(form) {
+            const formData = new FormData(form);
+            const submitButton = form.querySelector('button[type="submit"]');
+            const buttonText = submitButton.querySelector('span');
+            const originalText = buttonText.textContent;
+
+            // Add loading state
+            submitButton.disabled = true;
+            buttonText.textContent = 'Submitting...';
+            submitButton.classList.add('loading');
+
+            // Add browser information
+            formData.append('source_ip', '');
+            formData.append('user_agent', navigator.userAgent);
+
+            // Track submission attempt
+            trackEvent('form_submission_attempt', {
+                event_category: 'Form',
+                event_label: formData.get('variant'),
+                variant: formData.get('variant')
+            });
+
+            // Convert FormData to URL-encoded string
+            const data = new URLSearchParams(formData);
+
+            fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: data
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(json => {
+                    // Reset button state
+                    submitButton.disabled = false;
+                    buttonText.textContent = originalText;
+                    submitButton.classList.remove('loading');
+
+                    // Hide the form and show message
+                    form.style.display = 'none';
+                    const messageDiv = document.getElementById('form-message');
+                    messageDiv.classList.remove('hidden');
+
+                    if (json.isDuplicate) {
+                        messageDiv.innerHTML = messages.duplicate;
+                        trackEvent('form_submission_duplicate', {
+                            event_category: 'Form',
+                            event_label: formData.get('variant'),
+                            variant: formData.get('variant')
+                        });
+                    } else if (json.success) {
+                        messageDiv.innerHTML = messages.success;
+                        trackEvent('form_submission_success', {
+                            event_category: 'Form',
+                            event_label: formData.get('variant'),
+                            variant: formData.get('variant')
+                        });
+                    } else {
+                        messageDiv.innerHTML = messages.error;
+                        trackEvent('form_submission_error', {
+                            event_category: 'Form',
+                            event_label: formData.get('variant'),
+                            variant: formData.get('variant'),
+                            error: json.message
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Form submission error:', error);
+
+                    // Reset button state
+                    submitButton.disabled = false;
+                    buttonText.textContent = originalText;
+                    submitButton.classList.remove('loading');
+
+                    // Show network error message
+                    const messageDiv = document.getElementById('form-message');
+                    messageDiv.classList.remove('hidden');
+                    messageDiv.innerHTML = messages.error;
+
+                    trackEvent('form_submission_error', {
+                        event_category: 'Form',
+                        event_label: formData.get('variant'),
+                        variant: formData.get('variant'),
+                        error: 'Network error: ' + error.message
+                    });
+                });
+        }
+
+        //--------- Initialize Everything ---------//
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set current year
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Initialize variant with debug logging
+            console.log('Checking for existing variant cookie...');
+            let variant = getCookie('avia_variant');
+            console.log('Found variant:', variant);
+
+            if (!variant) {
+                console.log('No variant found, assigning new variant...');
+                variant = assignVariant();
+                console.log('New variant assigned:', variant);
+            }
+
+            showVariant(variant);
+
+            // Set variant in hidden fields
+            document.querySelectorAll('[name="variant"]').forEach(input => {
+                input.value = variant.toUpperCase();
+                console.log('Set variant field value:', input.value);
+            });
+
+            // Form submission handling
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    handleFormSubmission(this);
+                });
+            });
+
+            // Track scroll depth
+            let maxScroll = 0;
+            let scrollThresholds = [25, 50, 75, 100];
+
+            window.addEventListener('scroll', debounce(() => {
+                const scrollPercent = Math.round((window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100);
+
+                if (scrollPercent > maxScroll) {
+                    maxScroll = scrollPercent;
+
+                    scrollThresholds.forEach((threshold, index) => {
+                        if (scrollPercent >= threshold) {
+                            trackEvent('scroll_depth', {
+                                event_category: 'Engagement',
+                                event_label: `${threshold}%`,
+                                scroll_percent: threshold,
+                                page_path: window.location.pathname
+                            });
+                            scrollThresholds.splice(index, 1);
+                        }
+                    });
+                }
+            }, 250));
+
+            // Track CTA clicks
+            document.querySelectorAll('.cta').forEach(cta => {
+                cta.addEventListener('click', function (e) {
+                    trackEvent('cta_click', {
+                        event_category: 'Engagement',
+                        event_label: this.textContent.trim(),
+                        cta_text: this.textContent.trim(),
+                        cta_location: this.getAttribute('href'),
+                        variant: variant.toUpperCase()
+                    });
+                });
+            });
+
+            // Initialize industry selector
+            const industrySelect = document.getElementById('industry');
+            const otherIndustryContainer = document.getElementById('other-industry-container');
+
+            if (industrySelect && otherIndustryContainer) {
+                industrySelect.addEventListener('change', function () {
+                    if (this.value === 'other') {
+                        otherIndustryContainer.classList.remove('hidden');
+                        document.getElementById('industry-other').required = true;
+                    } else {
+                        otherIndustryContainer.classList.add('hidden');
+                        document.getElementById('industry-other').required = false;
+                    }
+
+                    trackEvent('industry_selected', {
+                        event_category: 'Form',
+                        event_label: this.value,
+                        industry: this.value,
+                        variant: variant.toUpperCase()
+                    });
+                });
+            }
+
+            // Track form field interactions
+            document.querySelectorAll('input, select').forEach(field => {
+                field.addEventListener('focus', function () {
+                    if (!this.dataset.tracked) {
+                        trackEvent('form_field_focus', {
+                            event_category: 'Form',
+                            event_label: this.name,
+                            field_type: this.type,
+                            field_name: this.name,
+                            form_id: this.closest('form').id,
+                            variant: variant.toUpperCase()
+                        });
+                        this.dataset.tracked = 'true';
+                    }
+                });
+            });
+
+            // Initialize smooth scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+
+                        trackEvent('smooth_scroll', {
+                            event_category: 'Navigation',
+                            event_label: this.getAttribute('href'),
+                            target_id: this.getAttribute('href').slice(1)
+                        });
+                    }
+                });
+            });
+
+            // Track initial page load
+            trackEvent('page_load', {
+                event_category: 'Page',
+                event_label: document.title,
+                variant: variant.toUpperCase()
             });
         });
     </script>
