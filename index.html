@@ -4,7 +4,7 @@
 <head>
     <!-- Google Analytics -->
     <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XT9R8KQFRF"></script>
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XT9R8KQFRF"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
@@ -20,9 +20,23 @@
             debug_mode: true,
             send_page_view: true,
             cookie_flags: 'samesite=none;secure',
-            cookie_domain: 'exploreavia.com'
+            cookie_domain: 'exploreavia.com',
+            'transport_url': 'https://www.google-analytics.com/j/collect',
+            'transport_method': 'beacon'
         });
 
+        // Add this right after your GA initialization
+        gtag('set', 'send_to', 'G-XT9R8KQFRF');
+        gtag('event', 'ga_debug', {
+            'debug_mode': true,
+            'transport_method': 'beacon',
+            callback: function () {
+                console.log('GA Debug Event sent successfully');
+            },
+            'event_callback': function () {
+                console.log('GA Event callback received');
+            }
+        });
         // Debug pageview for verification
         gtag('event', 'debug_pageview', {
             'debug_mode': true,
@@ -30,8 +44,30 @@
             'page_title': document.title,
             'send_to': 'G-XT9R8KQFRF'
         });
-    </script>
+    </script> -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XT9R8KQFRF"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
 
+        // Initialize consent mode - keep this granted
+        gtag('consent', 'default', {
+            'analytics_storage': 'granted',
+            'ad_storage': 'granted'
+        });
+
+        gtag('js', new Date());
+        gtag('config', 'G-XT9R8KQFRF', {
+            debug_mode: true,
+            send_page_view: true
+        });
+
+        // Simple debug event
+        gtag('event', 'debug_pageview', {
+            'debug_mode': true,
+            'send_to': 'G-XT9R8KQFRF'
+        });
+    </script>
     <!-- Microsoft Clarity -->
     <script type="text/javascript">
         (function (c, l, a, r, i, t, y) {
