@@ -45,7 +45,7 @@
             'send_to': 'G-XT9R8KQFRF'
         });
     </script> -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XT9R8KQFRF"></script>
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XT9R8KQFRF"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
@@ -66,6 +66,33 @@
         gtag('event', 'debug_pageview', {
             'debug_mode': true,
             'send_to': 'G-XT9R8KQFRF'
+        });
+    </script> -->
+
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XT9R8KQFRF"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            console.log('gtag called with:', arguments); // Debug line
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        const GA_ID = 'G-XT9R8KQFRF';  // Defined once to avoid typos
+        console.log('Initializing GA with ID:', GA_ID); // Debug line
+
+        gtag('config', GA_ID, {
+            debug_mode: true,
+            send_page_view: true
+        });
+
+        // Debug pageview for verification
+        gtag('event', 'debug_pageview', {
+            'debug_mode': true,
+            'send_to': GA_ID
         });
     </script>
     <!-- Microsoft Clarity -->
@@ -1031,21 +1058,57 @@
         }); -->
 
     <script>
+        // Add this at the top of your script section
+        console.log('Checking for existing GA setups...');
+        console.log('window.dataLayer:', window.dataLayer);
+        console.log('window.gtag:', typeof window.gtag);
+        document.querySelectorAll('script').forEach(script => {
+            if (script.src.includes('googletagmanager')) {
+                console.log('Found GA script:', script.src);
+            }
+        });
         //--------- Cookie Management ---------//
+        // function setCookie(name, value, days) {
+        //     const d = new Date();
+        //     d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+        //     const expires = `expires=${d.toUTCString()}`;
+        //     document.cookie = `${name}=${value};${expires};path=/;SameSite=Lax`;
+        // }
+
+        // function getCookie(name) {
+        //     const value = `; ${document.cookie}`;
+        //     const parts = value.split(`; ${name}=`);
+        //     if (parts.length === 2) return parts.pop().split(';').shift();
+        //     return null;
+        // }
+        function getCookie(name) {
+            console.log('All cookies:', document.cookie); // Debug line
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            console.log(`Looking for cookie ${name}:`, parts); // Debug line
+            if (parts.length === 2) {
+                const cookieValue = parts.pop().split(';').shift();
+                console.log(`Found cookie ${name}:`, cookieValue); // Debug line
+                return cookieValue;
+            }
+            console.log(`Cookie ${name} not found`); // Debug line
+            return null;
+        }
+
         function setCookie(name, value, days) {
             const d = new Date();
             d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
             const expires = `expires=${d.toUTCString()}`;
-            document.cookie = `${name}=${value};${expires};path=/;SameSite=Lax`;
-        }
+            const cookieString = `${name}=${value};${expires};path=/;domain=exploreavia.com;secure`;
+            document.cookie = cookieString;
+            console.log('Setting cookie:', cookieString); // Debug line
 
-        function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-            return null;
+            // Verify cookie was set
+            setTimeout(() => {
+                const verifySet = getCookie(name);
+                console.log('Verify cookie was set:', name, verifySet);
+            }, 100);
         }
-
         //--------- Utility Functions ---------//
         function debounce(func, wait) {
             let timeout;
