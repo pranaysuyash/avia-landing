@@ -42,8 +42,10 @@
         content="Powerful tools for uploading, organizing, and analyzing your media files.">
 
   <!-- Tailwind CSS -->
-  <link rel="preconnect" href="https://cdn.tailwindcss.com">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <script src="https://cdn.tailwindcss.com"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/3.3.3/tailwind.min.js"></script>
+
   <script>
     tailwind.config = {
       theme: {
@@ -443,28 +445,28 @@
     // =========================== COOKIE UTILITIES =========================== //
     function getCookie(name) {
       console.log('All cookies:', document.cookie); // Debug
-      const value = \`; \${document.cookie}\`;
-      const parts = value.split(\`;\${name}=\`);
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
       if (parts.length === 2) {
         const cookieValue = parts.pop().split(';').shift();
-        console.log(\`Found cookie \${name}:\`, cookieValue);
+        console.log(`Found cookie ${name}:`, cookieValue);
         return cookieValue;
       }
-      console.log(\`Cookie not found: \${name}\`);
+      console.log(`Cookie not found: ${name}`);
       return null;
     }
-
+  
     // Removed domain=exploreavia.com; If on HTTPS, keep 'secure'; remove if on HTTP
     function setCookie(name, value, days) {
       const d = new Date();
       d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
-      const expires = \`expires=\${d.toUTCString()}\`;
+      const expires = `expires=${d.toUTCString()}`;
       // If you're serving over HTTPS, keep 'secure'. Otherwise remove it.
-      const cookieString = \`\${name}=\${value};\${expires};path=/;secure\`;
+      const cookieString = `${name}=${value};${expires};path=/;secure`;
       document.cookie = cookieString;
       console.log('Setting cookie:', cookieString);
     }
-
+  
     // =========================== GA EVENT TRACKING =========================== //
     function trackEvent(eventName, params = {}) {
       if (typeof gtag === 'function') {
@@ -477,7 +479,7 @@
         console.log('GA Event Fired:', eventName, enhancedParams);
       }
     }
-
+  
     // =========================== A/B TESTING LOGIC =========================== //
     function assignVariant() {
       const storedVariant = getCookie('avia_variant');
@@ -490,47 +492,47 @@
       if (rand < 0.4) newVariant = 'a';
       else if (rand < 0.8) newVariant = 'b';
       else newVariant = 'c';
-
+  
       setCookie('avia_variant', newVariant, 30);
       trackEvent('variant_assigned', { variant: newVariant.toUpperCase() });
       return newVariant;
     }
-
+  
     function showVariant(variant) {
       document.querySelectorAll('.form-a, .form-b, .form-c').forEach(el => {
         el.classList.add('hidden');
       });
-      const selectedForm = document.querySelector(\`.form-\${variant}\`);
+      const selectedForm = document.querySelector(`.form-${variant}`);
       if (selectedForm) {
         selectedForm.classList.remove('hidden');
       }
     }
-
+  
     // =========================== FORM SUBMISSION HANDLER =========================== //
     function handleFormSubmission(form) {
       const formData = new FormData(form);
       const submitButton = form.querySelector('button[type="submit"]');
       const buttonText = submitButton.querySelector('span');
       const originalText = buttonText.textContent;
-
+  
       // Loading UI
       submitButton.disabled = true;
       buttonText.textContent = 'Submitting...';
       submitButton.classList.add('loading');
-
+  
       // Extra data
       formData.append('source_ip', '');
       formData.append('user_agent', navigator.userAgent);
-
+  
       // Track attempt
       trackEvent('form_submission_attempt', { variant: formData.get('variant') });
-
+  
       // Convert to URL-encoded
       const data = new URLSearchParams(formData);
-
+  
       console.log('[handleFormSubmission] Sending data to: ', form.action);
       console.log('[handleFormSubmission] Form data entries:', Array.from(formData.entries()));
-
+  
       fetch(form.action, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -543,17 +545,17 @@
       })
       .then(json => {
         console.log('[handleFormSubmission] JSON from script:', json);
-
+  
         // Reset button
         submitButton.disabled = false;
         buttonText.textContent = originalText;
         submitButton.classList.remove('loading');
-
+  
         // Hide form, show message
         form.style.display = 'none';
         const messageDiv = document.getElementById('form-message');
         messageDiv.classList.remove('hidden');
-
+  
         if (json.isDuplicate) {
           // Duplicate
           messageDiv.innerHTML = `
@@ -611,12 +613,12 @@
       })
       .catch(error => {
         console.error('[handleFormSubmission] FETCH ERROR:', error);
-
+  
         // Reset button
         submitButton.disabled = false;
         buttonText.textContent = originalText;
         submitButton.classList.remove('loading');
-
+  
         // Show network error
         const messageDiv = document.getElementById('form-message');
         messageDiv.classList.remove('hidden');
@@ -641,27 +643,27 @@
         });
       });
     }
-
+  
     // =========================== ON DOM READY =========================== //
     document.addEventListener('DOMContentLoaded', () => {
       // Display current year
       document.getElementById('current-year').textContent = new Date().getFullYear();
-
+  
       // 1. Determine or assign variant
       let variant = getCookie('avia_variant');
       if (!variant) {
         variant = assignVariant(); // sets cookie + returns a/b/c
       }
       variant = variant.toLowerCase(); // unify for usage
-
+  
       // 2. Show correct form
       showVariant(variant);
-
+  
       // 3. Make sure hidden input fields hold the correct variant
       document.querySelectorAll('[name="variant"]').forEach(input => {
         input.value = variant.toUpperCase();
       });
-
+  
       // 4. Attach form submission handlers
       document.querySelectorAll('form').forEach(form => {
         form.addEventListener('submit', function(e) {
@@ -669,7 +671,7 @@
           handleFormSubmission(this);
         });
       });
-
+  
       // 5. "Other industry" toggler (Variant B only)
       const industrySelect = document.getElementById('industry');
       const otherIndustryContainer = document.getElementById('other-industry-container');
@@ -684,7 +686,7 @@
           }
         });
       }
-
+  
       // 6. Track CTA clicks
       document.querySelectorAll('.cta').forEach(cta => {
         cta.addEventListener('click', function() {
@@ -694,7 +696,7 @@
           });
         });
       });
-
+  
       // (Optional) Additional tracking for scroll, field focus, etc. omitted.
     });
   </script>
