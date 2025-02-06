@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XT9R8KQFRF"></script>
+  <!-- Global Site Tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1234567890"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
-    gtag('config', 'G-XXXXXXX', { 'debug_mode': true }); 
-    /* Replace G-XXXXXXX above with your real GA ID if needed */
+    gtag('config', 'G-1234567890', { 'debug_mode': true });
   </script>
 
   <!-- Microsoft Clarity -->
   <script type="text/javascript">
     (function (c, l, a, r, i, t, y) {
-      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
       t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
       y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
     })(window, document, "clarity", "script", "okhbodwey7");
@@ -25,288 +24,267 @@
   <meta name="theme-color" content="#1e40af">
   <title>AVIA - Audio Video Image Analyzer Waitlist</title>
 
-  <!-- SEO Meta Tags -->
-  <meta name="description"
-        content="AVIA offers powerful tools for uploading, organizing, and analyzing your audio, video, and image content effortlessly. Join our waitlist for early access!">
-
-  <!-- Open Graph Meta Tags -->
+  <!-- SEO & Social Meta Tags -->
+  <meta name="description" content="AVIA offers powerful tools for uploading, organizing, and analyzing your audio, video, and image content effortlessly. Join our waitlist for early access!">
   <meta property="og:title" content="AVIA - Audio Video Image Analyzer">
   <meta property="og:description" content="Powerful tools for uploading, organizing, and analyzing your media files.">
   <meta property="og:url" content="https://www.exploreavia.com">
   <meta property="og:type" content="website">
-
-  <!-- Twitter Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AVIA - Audio Video Image Analyzer">
-  <meta name="twitter:description"
-        content="Powerful tools for uploading, organizing, and analyzing your media files.">
+  <meta name="twitter:description" content="Powerful tools for uploading, organizing, and analyzing your media files.">
 
-  <!-- Tailwind CSS -->
-  <!-- <link rel="preconnect" href="https://cdn.tailwindcss.com">
-  <script src="https://cdn.tailwindcss.com"></script> -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: {
-              50: '#f0f9ff',
-              100: '#e0f2fe',
-              200: '#bae6fd',
-              300: '#7dd3fc',
-              400: '#38bdf8',
-              500: '#0ea5e9',
-              600: '#0284c7',
-              700: '#0369a1',
-              800: '#075985',
-              900: '#0c4a6e',
-            }
-          },
-          animation: {
-            'fade-in': 'fadeIn 0.5s ease-out',
-            'slide-up': 'slideUp 0.5s ease-out',
-          },
-          keyframes: {
-            fadeIn: {
-              '0%': { opacity: '0' },
-              '100%': { opacity: '1' },
-            },
-            slideUp: {
-              '0%': { transform: 'translateY(20px)', opacity: '0' },
-              '100%': { transform: 'translateY(0)', opacity: '1' },
-            }
-          }
-        }
-      }
-    }
-  </script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Custom CSS (Design & Messaging Updates Only) -->
   <style>
+    /* Glassmorphism effect */
+    .glass {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+    }
+    /* Gradient background for hero section */
+    .gradient-bg {
+      background: linear-gradient(-45deg, #0ea5e9, #0369a1, #075985, #0c4a6e);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      color: #fff;
+    }
     @keyframes gradient {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-    .gradient-bg {
-      background: linear-gradient(-45deg, #0ea5e9, #0369a1, #075985, #0c4a6e);
-      background-size: 400% 400%;
-      animation: gradient 15s ease infinite;
-    }
+    /* Feature card hover effect */
     .feature-card {
       transition: transform 0.3s, box-shadow 0.3s;
     }
     .feature-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-                  0 8px 10px -6px rgb(0 0 0 / 0.1);
-    }
-    .input-focus {
-      transition: all 0.3s ease;
-    }
-    .input-focus:focus {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
-                  0 2px 4px -2px rgb(0 0 0 / 0.1);
-    }
-    .scroll-smooth {
-      scroll-behavior: smooth;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1),
+                  0 8px 10px -6px rgba(0,0,0,0.1);
     }
     /* Loading spinner for form button */
     .loading::after {
       content: '';
-      display: block;
+      display: inline-block;
       width: 20px;
       height: 20px;
       border: 2px solid #fff;
       border-radius: 50%;
       border-top-color: transparent;
       animation: spin 0.8s linear infinite;
+      margin-left: 8px;
+      vertical-align: middle;
     }
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+    /* Extra spacing for hero section */
+    .hero-section {
+      padding: 6rem 0;
+    }
+    /* Accessibility: Skip link styling */
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: auto;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+    .skip-link:focus {
+      position: static;
+      width: auto;
+      height: auto;
+      overflow: visible;
+      padding: 1rem;
+      background: #fff;
+      z-index: 1000;
+    }
   </style>
 </head>
+<body class="bg-light text-dark">
+  <!-- Skip to main content link for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-<body class="bg-gray-50 text-gray-800 scroll-smooth">
-  <!-- Skip to main content for accessibility -->
-  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:p-4 focus:bg-white focus:z-50">
-    Skip to main content
-  </a>
-
-  <!-- Header -->
-  <header class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
-    <div class="container mx-auto px-4 py-4">
-      <nav class="flex justify-between items-center">
-        <a href="#" class="text-2xl font-bold text-primary-600 hover:text-primary-700 transition">AVIA</a>
-        <div class="space-x-6">
-          <a href="#features" class="text-gray-600 hover:text-primary-600 transition">Features</a>
-          <a href="#waitlist"
-             class="cta bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition">
-            Join Waitlist
-          </a>
+  <!-- Header / Navbar -->
+  <header class="fixed-top bg-white shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <!-- Updated brand with tagline -->
+        <a href="#" class="navbar-brand fw-bold fs-3 text-primary">
+          AVIA 
+          <span class="d-block fs-6 text-secondary">AI-Driven Media Insights</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navbarContent" class="collapse navbar-collapse">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+            <li class="nav-item">
+              <a href="#features" class="nav-link"
+                 onclick="gtag('event', 'click', { event_category: 'Navigation', event_label: 'Features' });">
+                Features
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#waitlist" class="btn btn-primary ms-lg-3"
+                 onclick="gtag('event', 'click', { event_category: 'CTA', event_label: 'Join Waitlist', value: 1 });">
+                Join Waitlist
+              </a>
+            </li>
+            <!-- Additional AI/ML Glossary Link -->
+            <li class="nav-item">
+              <a href="https://aiml-glossary-pranaysuyash.replit.app/" target="_blank" class="btn btn-outline-secondary ms-lg-3"
+                 onclick="gtag('event', 'click', { event_category: 'Navigation', event_label: 'AI/ML Glossary' });">
+                AI/ML Glossary
+              </a>
+            </li>
+          </ul>
         </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
   </header>
 
   <!-- Main Content -->
-  <main id="main-content" class="pt-20">
-    <!-- Hero Section -->
-    <section class="gradient-bg text-white py-24 lg:py-32">
-      <div class="container mx-auto px-4">
-        <div class="max-w-4xl mx-auto text-center">
-          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in">
-            Transform Your Media into Actionable Insights
-          </h1>
-          <p class="text-xl md:text-2xl mb-8 text-gray-100 animate-slide-up">
-            Advanced tools for uploading, organizing, and analyzing your audio, video, and image content.
-          </p>
-          <a href="#waitlist"
-             class="cta inline-block bg-white text-primary-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition transform hover:-translate-y-1 hover:shadow-lg">
-            Get Early Access
-          </a>
-        </div>
+  <main id="main-content" class="pt-5 mt-5">
+    <!-- Hero Section with Updated Messaging -->
+    <section class="hero-section gradient-bg text-center">
+      <div class="container glass p-5">
+        <h1 class="display-4 fw-bold mb-4">Unlock the Hidden Potential of Your Media</h1>
+        <p class="lead mb-4">
+          Leverage advanced AI and machine learning to transform your audio, video, and images into actionable insights that drive smarter decisions—get early access now!
+        </p>
+        <a href="#waitlist" class="btn btn-light btn-lg"
+           onclick="gtag('event', 'click', { event_category: 'CTA', event_label: 'Get Early Access', value: 1 });">
+          Get Early Access
+        </a>
       </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="py-20 bg-white">
-      <div class="container mx-auto px-4">
-        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Powerful Features</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- Features Section with Updated Messaging -->
+    <section id="features" class="py-5 bg-white">
+      <div class="container">
+        <h2 class="text-center fw-bold mb-5">Powerful Features</h2>
+        <div class="row g-4">
           <!-- Feature Card 1 -->
-          <div class="feature-card bg-white rounded-xl shadow-md overflow-hidden">
-            <div class="p-6">
-              <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
-                <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 16l4.586-4.586a2 2 0
-                           012.828 0L16 16m-2-2l1.586-1.586a2 2
-                           0 012.828 0L20 14m-6-6h.01M6 20h12
-                           a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0
-                           00-2 2v12a2 2 0 002 2z"/>
-                </svg>
+          <div class="col-md-4">
+            <div class="card feature-card h-100 border-0 shadow-sm glass"
+                 onclick="gtag('event', 'click', { event_category: 'Feature Card', event_label: 'Media Organization' });">
+              <div class="card-body text-center">
+                <div class="mb-3">
+                  <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex p-3">
+                    <i class="fas fa-folder-open fa-2x text-primary"></i>
+                  </div>
+                </div>
+                <h5 class="card-title fw-bold">Media Organization</h5>
+                <p class="card-text">
+                  Streamline your media management with intelligent categorization and search—find exactly what you need in seconds.
+                </p>
               </div>
-              <h3 class="text-xl font-semibold mb-2">Media Organization</h3>
-              <p class="text-gray-600">Effortlessly organize and manage your media files with AI-powered tools.</p>
             </div>
           </div>
           <!-- Feature Card 2 -->
-          <div class="feature-card bg-white rounded-xl shadow-md overflow-hidden">
-            <div class="p-6">
-              <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
-                <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0
-                           00-2 2v6a2 2 0 002 2h2a2 2 0
-                           002-2zm0 0V9a2 2 0 012-2h2a2 2 0
-                           012 2v10m-6 0a2 2 0 002 2h2a2 2 0
-                           002-2m0 0V5a2 2 0 012-2h2a2 2 0
-                           012 2v14a2 2 0 01-2 2h-2a2 2 0
-                           01-2-2z"/>
-                </svg>
+          <div class="col-md-4">
+            <div class="card feature-card h-100 border-0 shadow-sm glass"
+                 onclick="gtag('event', 'click', { event_category: 'Feature Card', event_label: 'Advanced Analytics' });">
+              <div class="card-body text-center">
+                <div class="mb-3">
+                  <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex p-3">
+                    <i class="fas fa-chart-line fa-2x text-primary"></i>
+                  </div>
+                </div>
+                <h5 class="card-title fw-bold">Advanced Analytics</h5>
+                <p class="card-text">
+                  Dive deep into your media with powerful analytics that reveal trends, patterns, and opportunities to drive growth.
+                </p>
               </div>
-              <h3 class="text-xl font-semibold mb-2">Advanced Analytics</h3>
-              <p class="text-gray-600">Gain valuable insights from your media content with comprehensive analysis tools.</p>
             </div>
           </div>
           <!-- Feature Card 3 -->
-          <div class="feature-card bg-white rounded-xl shadow-md overflow-hidden">
-            <div class="p-6">
-              <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
-                <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 6V4m0 2a2 2 0 100
-                           4m0-4a2 2 0 110 4m-6 8a2 2 0
-                           100-4m0 4a2 2 0 110-4m0 4v2m0
-                           -6V4m6 6v10m6-2a2 2 0 100-4m0
-                           4a2 2 0 110-4m0 4v2m0-6V4"/>
-                </svg>
+          <div class="col-md-4">
+            <div class="card feature-card h-100 border-0 shadow-sm glass"
+                 onclick="gtag('event', 'click', { event_category: 'Feature Card', event_label: 'Custom Workflow' });">
+              <div class="card-body text-center">
+                <div class="mb-3">
+                  <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex p-3">
+                    <i class="fas fa-cogs fa-2x text-primary"></i>
+                  </div>
+                </div>
+                <h5 class="card-title fw-bold">Custom Workflow</h5>
+                <p class="card-text">
+                  Customize every step of your media processing with flexible automation and settings designed to fit your unique workflow.
+                </p>
               </div>
-              <h3 class="text-xl font-semibold mb-2">Custom Workflow</h3>
-              <p class="text-gray-600">Tailor the platform to your needs with customizable settings and automation.</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Waitlist Section -->
-    <section id="waitlist" class="py-20 bg-gray-50">
-      <div class="container mx-auto px-4">
-        <div class="max-w-lg mx-auto">
-          <div class="bg-white rounded-2xl shadow-xl p-8">
-            <h2 class="text-3xl font-bold text-center mb-2">Join Our Waitlist</h2>
-            <p class="text-gray-600 text-center mb-8">Be among the first to experience AVIA</p>
+    <!-- Waitlist Section with Updated Messaging -->
+    <section id="waitlist" class="py-5 bg-light">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-6">
+            <div class="bg-white rounded-3 shadow p-4 p-md-5 glass">
+              <h2 class="text-center fw-bold mb-3">Reserve Your Early Access</h2>
+              <p class="text-center text-muted mb-4">
+                Join our exclusive waitlist and be the first to harness next-generation media analytics that will redefine the way you work.
+              </p>
 
-            <!-- Variant A Form -->
-            <div class="form form-a hidden">
-              <form id="waitlist-form-a"
-                    class="space-y-4"
-                    action="https://script.google.com/macros/s/AKfycby5NATMfBud0PuQfuadtBaUPobm6GnIiam3_50nj8chZyIrTfI3kaYpbhiTO_vqrLOS/exec"
-                    method="POST">
-                <noscript>
-                  <div class="text-center p-4 bg-yellow-100 text-yellow-800 rounded-lg">
-                    Please enable JavaScript to join our waitlist, or contact us directly at
-                    founder@psrstech.com
+              <!-- Variant A Form -->
+              <div class="form form-a d-none">
+                <form id="waitlist-form-a" action="https://script.google.com/macros/s/AKfycby5NATMfBud0PuQfuadtBaUPobm6GnIiam3_50nj8chZyIrTfI3kaYpbhiTO_vqrLOS/exec" method="POST">
+                  <noscript>
+                    <div class="alert alert-warning text-center">
+                      Please enable JavaScript to join our waitlist, or contact us directly at founder@psrstech.com
+                    </div>
+                  </noscript>
+                  <div class="mb-3">
+                    <label for="name-a" class="form-label">Name</label>
+                    <input type="text" id="name-a" name="name" required class="form-control"
+                           onfocus="gtag('event', 'form_field_focus', { event_category: 'Waitlist Form', event_label: 'Name Field' });">
                   </div>
-                </noscript>
-
-                <div>
-                  <label for="name-a" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                  <input type="text" id="name-a" name="name" required
-                         class="input-focus w-full px-4 py-3 border border-gray-300 rounded-lg
-                                focus:ring-2 focus:ring-primary-500 focus:border-transparent">
-                </div>
-
-                <div>
-                  <label for="email-a" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                  <input type="email" id="email-a" name="email" required
-                         class="input-focus w-full px-4 py-3 border border-gray-300 rounded-lg
-                                focus:ring-2 focus:ring-primary-500 focus:border-transparent">
-                </div>
-
-                <input type="hidden" id="variant-a" name="variant" value="A">
-
-                <button type="submit"
-                        class="w-full bg-primary-600 text-white px-6 py-3 rounded-lg text-lg font-semibold
-                               hover:bg-primary-700 transition transform hover:-translate-y-1 flex
-                               justify-center items-center">
-                  <span>Join Waitlist</span>
-                </button>
-              </form>
-            </div>
-
-            <!-- Variant B Form -->
-            <div class="form form-b hidden">
-              <form id="waitlist-form-b"
-                    class="space-y-4"
-                    action="https://script.google.com/macros/s/AKfycby5NATMfBud0PuQfuadtBaUPobm6GnIiam3_50nj8chZyIrTfI3kaYpbhiTO_vqrLOS/exec"
-                    method="POST">
-                <div class="grid grid-cols-1 gap-4">
-                  <div>
-                    <label for="name-b" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                    <input type="text" id="name-b" name="name" required
-                           class="input-focus w-full px-4 py-3 border border-gray-300 rounded-lg
-                                  focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                  <div class="mb-3">
+                    <label for="email-a" class="form-label">Email</label>
+                    <input type="email" id="email-a" name="email" required class="form-control"
+                           onfocus="gtag('event', 'form_field_focus', { event_category: 'Waitlist Form', event_label: 'Email Field' });">
                   </div>
+                  <input type="hidden" id="variant-a" name="variant" value="A">
+                  <button type="submit" class="btn btn-primary w-100">
+                    <span>Join Waitlist</span>
+                  </button>
+                </form>
+              </div>
 
-                  <div>
-                    <label for="email-b" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                    <input type="email" id="email-b" name="email" required
-                           class="input-focus w-full px-4 py-3 border border-gray-300 rounded-lg
-                                  focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+              <!-- Variant B Form -->
+              <div class="form form-b d-none">
+                <form id="waitlist-form-b" action="https://script.google.com/macros/s/AKfycby5NATMfBud0PuQfuadtBaUPobm6GnIiam3_50nj8chZyIrTfI3kaYpbhiTO_vqrLOS/exec" method="POST">
+                  <div class="mb-3">
+                    <label for="name-b" class="form-label">Name</label>
+                    <input type="text" id="name-b" name="name" required class="form-control"
+                           onfocus="gtag('event', 'form_field_focus', { event_category: 'Waitlist Form', event_label: 'Name Field' });">
                   </div>
-
-                  <div>
-                    <label for="industry" class="block text-sm font-medium text-gray-700 mb-1">Industry</label>
-                    <select id="industry" name="industry" required
-                            class="input-focus w-full px-4 py-3 border border-gray-300 rounded-lg
-                                   focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                  <div class="mb-3">
+                    <label for="email-b" class="form-label">Email</label>
+                    <input type="email" id="email-b" name="email" required class="form-control"
+                           onfocus="gtag('event', 'form_field_focus', { event_category: 'Waitlist Form', event_label: 'Email Field' });">
+                  </div>
+                  <div class="mb-3">
+                    <label for="industry" class="form-label">Industry</label>
+                    <select id="industry" name="industry" required class="form-select">
                       <option value="" disabled selected>Select Your Industry</option>
                       <option value="education">Education</option>
                       <option value="project_management">Project Management</option>
@@ -314,97 +292,61 @@
                       <option value="other">Other</option>
                     </select>
                   </div>
-
-                  <div id="other-industry-container" class="hidden">
-                    <label for="industry-other" class="block text-sm font-medium text-gray-700 mb-1">
-                      Specify Industry
-                    </label>
-                    <input type="text" id="industry-other" name="industry_other"
-                           class="input-focus w-full px-4 py-3 border border-gray-300 rounded-lg
-                                  focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                  <div class="mb-3 d-none" id="other-industry-container">
+                    <label for="industry-other" class="form-label">Specify Industry</label>
+                    <input type="text" id="industry-other" name="industry_other" class="form-control">
                   </div>
-                </div>
+                  <input type="hidden" id="variant-b" name="variant" value="B">
+                  <button type="submit" class="btn btn-primary w-100">
+                    <span>Join Waitlist</span>
+                  </button>
+                </form>
+              </div>
 
-                <input type="hidden" id="variant-b" name="variant" value="B">
+              <!-- Variant C Form -->
+              <div class="form form-c d-none">
+                <form id="waitlist-form-c" action="https://script.google.com/macros/s/AKfycby5NATMfBud0PuQfuadtBaUPobm6GnIiam3_50nj8chZyIrTfI3kaYpbhiTO_vqrLOS/exec" method="POST">
+                  <div class="mb-3">
+                    <label for="email-c" class="form-label">Email</label>
+                    <input type="email" id="email-c" name="email" required class="form-control"
+                           onfocus="gtag('event', 'form_field_focus', { event_category: 'Waitlist Form', event_label: 'Email Field' });">
+                  </div>
+                  <input type="hidden" id="variant-c" name="variant" value="C">
+                  <button type="submit" class="btn btn-primary w-100">
+                    <span>Join Waitlist</span>
+                  </button>
+                </form>
+              </div>
 
-                <button type="submit"
-                        class="w-full bg-primary-600 text-white px-6 py-3 rounded-lg text-lg font-semibold
-                               hover:bg-primary-700 transition transform hover:-translate-y-1 flex
-                               justify-center items-center">
-                  <span>Join Waitlist</span>
-                </button>
-              </form>
-            </div>
-
-            <!-- Variant C Form -->
-            <div class="form form-c hidden">
-              <form id="waitlist-form-c"
-                    class="space-y-4"
-                    action="https://script.google.com/macros/s/AKfycby5NATMfBud0PuQfuadtBaUPobm6GnIiam3_50nj8chZyIrTfI3kaYpbhiTO_vqrLOS/exec"
-                    method="POST">
-                <div>
-                  <label for="email-c" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                  <input type="email" id="email-c" name="email" required
-                         class="input-focus w-full px-4 py-3 border border-gray-300 rounded-lg
-                                focus:ring-2 focus:ring-primary-500 focus:border-transparent">
-                </div>
-
-                <input type="hidden" id="variant-c" name="variant" value="C">
-
-                <button type="submit"
-                        class="w-full bg-primary-600 text-white px-6 py-3 rounded-lg text-lg font-semibold
-                               hover:bg-primary-700 transition transform hover:-translate-y-1 flex
-                               justify-center items-center">
-                  <span>Join Waitlist</span>
-                </button>
-              </form>
-            </div>
-
-            <!-- Success or Error Message Container -->
-            <div id="form-message" class="hidden">
-              <!-- This is replaced dynamically on success/error -->
+              <!-- Success or Error Message Container -->
+              <div id="form-message" class="d-none mt-4">
+                <!-- Message content injected dynamically -->
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="py-20 bg-white">
-      <div class="container mx-auto px-4">
-        <div class="max-w-2xl mx-auto text-center">
-          <h2 class="text-3xl font-bold mb-4">Get in Touch</h2>
-          <p class="text-gray-600 mb-8">Have questions? We're here to help!</p>
-          <div class="space-y-4">
-            <div>
-              <a href="mailto:founder@psrstech.com"
-                 class="text-primary-600 hover:text-primary-700 flex items-center justify-center">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M3 8l7.89 5.26a2 2 0
-                           002.22 0L21 8M5 19h14a2 2 0
-                           002-2V7a2 2 0 00-2-2H5a2 2 0
-                           00-2 2v10a2 2 0 002 2z"/>
-                </svg>
-                founder@psrstech.com
+    <!-- Contact Section with Updated Messaging -->
+    <section class="py-5 bg-white">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center">
+            <h2 class="fw-bold mb-3">Let’s Connect</h2>
+            <p class="text-muted mb-4">
+              Have questions or need more details? Reach out and let our team help you unlock the full potential of your media.
+            </p>
+            <div class="mb-2">
+              <a href="mailto:founder@psrstech.com" class="text-decoration-none text-primary"
+                 onclick="gtag('event', 'click', { event_category: 'Contact', event_label: 'Email Link' });">
+                <i class="fas fa-envelope me-2"></i>founder@psrstech.com
               </a>
             </div>
             <div>
-              <a href="tel:+919910403502"
-                 class="text-primary-600 hover:text-primary-700 flex items-center justify-center">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M3 5a2 2 0 012-2h3.28
-                           a1 1 0 01.948.684l1.498 4.493
-                           a1 1 0 01-.502 1.21l-2.257
-                           1.13a11.042 11.042 0 005.516
-                           5.516l1.13-2.257a1 1 0
-                           011.21-.502l4.493 1.498a1 1
-                           0 01.684.949V19a2 2 0
-                           01-2 2h-1C9.716 21 3
-                           14.284 3 6V5z"/>
-                </svg>
-                +91 9910403502
+              <a href="tel:+919910403502" class="text-decoration-none text-primary"
+                 onclick="gtag('event', 'click', { event_category: 'Contact', event_label: 'Phone Link' });">
+                <i class="fas fa-phone me-2"></i>+91 9910403502
               </a>
             </div>
           </div>
@@ -414,37 +356,37 @@
   </main>
 
   <!-- Footer -->
-  <footer class="bg-gray-900 text-white py-12">
-    <div class="container mx-auto px-4">
-      <div class="max-w-6xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div>
-            <h3 class="text-2xl font-bold mb-4">AVIA</h3>
-            <p class="text-gray-400 mb-6">Advanced tools for media management and analysis.</p>
-          </div>
-          <div class="grid grid-cols-2 gap-8">
-            <div>
-              <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
-              <ul class="space-y-2">
-                <li><a href="#" class="text-gray-400 hover:text-white transition">Home</a></li>
-                <li><a href="#features" class="text-gray-400 hover:text-white transition">Features</a></li>
-                <li><a href="#waitlist" class="text-gray-400 hover:text-white transition">Join Waitlist</a></li>
-              </ul>
-            </div>
-          </div>
+  <footer class="bg-dark text-white py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h5 class="fw-bold">AVIA</h5>
+          <p class="small">Advanced tools for media management and analysis.</p>
         </div>
-        <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-          <p>&copy; <span id="current-year"></span> AVIA. All rights reserved.</p>
+        <div class="col-md-6 text-md-end">
+          <h6 class="fw-bold">Quick Links</h6>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-white text-decoration-none">Home</a></li>
+            <li><a href="#features" class="text-white text-decoration-none">Features</a></li>
+            <li><a href="#waitlist" class="text-white text-decoration-none">Join Waitlist</a></li>
+          </ul>
         </div>
+      </div>
+      <hr class="border-top border-secondary">
+      <div class="text-center small">
+        &copy; <span id="current-year"></span> AVIA. All rights reserved.
       </div>
     </div>
   </footer>
 
-  <!-- Single JS block for A/B logic and form submissions -->
+  <!-- Bootstrap 5 Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JavaScript: A/B Testing, Form Submission, GA Tracking, and Utilities -->
   <script>
     // =========================== COOKIE UTILITIES =========================== //
     function getCookie(name) {
-      console.log('All cookies:', document.cookie); // Debug
+      console.log('All cookies:', document.cookie);
       const value = `; ${document.cookie}`;
       const parts = value.split(`;${name}=`);
       if (parts.length === 2) {
@@ -456,12 +398,10 @@
       return null;
     }
 
-    // Removed domain=exploreavia.com; If on HTTPS, keep 'secure'; remove if on HTTP
     function setCookie(name, value, days) {
       const d = new Date();
       d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
       const expires = `expires=${d.toUTCString()}`;
-      // If you're serving over HTTPS, keep 'secure'. Otherwise remove it.
       const cookieString = `${name}=${value};${expires};path=/;secure`;
       document.cookie = cookieString;
       console.log('Setting cookie:', cookieString);
@@ -500,11 +440,11 @@
 
     function showVariant(variant) {
       document.querySelectorAll('.form-a, .form-b, .form-c').forEach(el => {
-        el.classList.add('hidden');
+        el.classList.add('d-none');
       });
       const selectedForm = document.querySelector(`.form-${variant}`);
       if (selectedForm) {
-        selectedForm.classList.remove('hidden');
+        selectedForm.classList.remove('d-none');
       }
     }
 
@@ -524,10 +464,10 @@
       formData.append('source_ip', '');
       formData.append('user_agent', navigator.userAgent);
 
-      // Track attempt
+      // Track submission attempt
       trackEvent('form_submission_attempt', { variant: formData.get('variant') });
 
-      // Convert to URL-encoded
+      // Convert form data to URL-encoded format
       const data = new URLSearchParams(formData);
 
       console.log('[handleFormSubmission] Sending data to: ', form.action);
@@ -545,64 +485,39 @@
       })
       .then(json => {
         console.log('[handleFormSubmission] JSON from script:', json);
-
-        // Reset button
         submitButton.disabled = false;
         buttonText.textContent = originalText;
         submitButton.classList.remove('loading');
-
-        // Hide form, show message
         form.style.display = 'none';
         const messageDiv = document.getElementById('form-message');
-        messageDiv.classList.remove('hidden');
+        messageDiv.classList.remove('d-none');
 
         if (json.isDuplicate) {
-          // Duplicate
           messageDiv.innerHTML = `
-            <div class="text-center py-8">
-              <svg class="w-16 h-16 text-blue-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M13 16h-1v-4h-1m1-4h.01M21
-                         12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-              <h3 class="text-2xl font-semibold text-gray-800 mb-2">Already Registered!</h3>
-              <p class="text-gray-600">You're already on our waitlist. We'll notify you when AVIA launches!</p>
-              <button onclick="location.reload()"
-                      class="mt-6 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
-                Try Different Email
-              </button>
+            <div class="text-center py-4">
+              <i class="fas fa-info-circle fa-3x text-primary mb-3"></i>
+              <h3 class="h4 fw-bold">Already Registered!</h3>
+              <p>You're already on our waitlist. We'll notify you when AVIA launches!</p>
+              <button onclick="location.reload()" class="btn btn-primary mt-3">Try Different Email</button>
             </div>
           `;
           trackEvent('form_submission_duplicate', { variant: formData.get('variant') });
         } else if (json.success) {
-          // Success
           messageDiv.innerHTML = `
-            <div class="text-center py-8">
-              <svg class="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M9 12l2 2 4-4m6
-                         2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-              <h3 class="text-2xl font-semibold text-gray-800 mb-2">Thank You!</h3>
-              <p class="text-gray-600">You've successfully joined our waitlist. We'll keep you updated!</p>
+            <div class="text-center py-4">
+              <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+              <h3 class="h4 fw-bold">Thank You!</h3>
+              <p>You've successfully joined our waitlist. We'll keep you updated!</p>
             </div>
           `;
           trackEvent('form_submission_success', { variant: formData.get('variant') });
         } else {
-          // General error
           messageDiv.innerHTML = `
-            <div class="text-center py-8">
-              <svg class="w-16 h-16 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M12 8v4m0 4h.01M21
-                         12a9 9 0 11-18 0 9 9 0
-                         0118 0z"/>
-              </svg>
-              <h3 class="text-2xl font-semibold text-gray-800 mb-2">Oops!</h3>
-              <p class="text-gray-600">Something went wrong. Please try again later.</p>
-              <button onclick="location.reload()" class="mt-6 px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
-                Try Again
-              </button>
+            <div class="text-center py-4">
+              <i class="fas fa-exclamation-circle fa-3x text-danger mb-3"></i>
+              <h3 class="h4 fw-bold">Oops!</h3>
+              <p>Something went wrong. Please try again later.</p>
+              <button onclick="location.reload()" class="btn btn-danger mt-3">Try Again</button>
             </div>
           `;
           trackEvent('form_submission_error', {
@@ -613,28 +528,17 @@
       })
       .catch(error => {
         console.error('[handleFormSubmission] FETCH ERROR:', error);
-
-        // Reset button
         submitButton.disabled = false;
         buttonText.textContent = originalText;
         submitButton.classList.remove('loading');
-
-        // Show network error
         const messageDiv = document.getElementById('form-message');
-        messageDiv.classList.remove('hidden');
+        messageDiv.classList.remove('d-none');
         messageDiv.innerHTML = `
-          <div class="text-center py-8">
-            <svg class="w-16 h-16 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 8v4m0 4h.01M21
-                       12a9 9 0 11-18 0 9 9 0
-                       0118 0z"/>
-            </svg>
-            <h3 class="text-2xl font-semibold text-gray-800 mb-2">Oops!</h3>
-            <p class="text-gray-600">Network error. Please try again later.</p>
-            <button onclick="location.reload()" class="mt-6 px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
-              Try Again
-            </button>
+          <div class="text-center py-4">
+            <i class="fas fa-exclamation-circle fa-3x text-danger mb-3"></i>
+            <h3 class="h4 fw-bold">Oops!</h3>
+            <p>Network error. Please try again later.</p>
+            <button onclick="location.reload()" class="btn btn-danger mt-3">Try Again</button>
           </div>
         `;
         trackEvent('form_submission_error', {
@@ -646,25 +550,23 @@
 
     // =========================== ON DOM READY =========================== //
     document.addEventListener('DOMContentLoaded', () => {
-      // Display current year
+      // Display current year in footer
       document.getElementById('current-year').textContent = new Date().getFullYear();
 
-      // 1. Determine or assign variant
+      // Determine or assign variant for A/B testing
       let variant = getCookie('avia_variant');
       if (!variant) {
-        variant = assignVariant(); // sets cookie + returns a/b/c
+        variant = assignVariant();
       }
-      variant = variant.toLowerCase(); // unify for usage
-
-      // 2. Show correct form
+      variant = variant.toLowerCase();
       showVariant(variant);
 
-      // 3. Make sure hidden input fields hold the correct variant
+      // Ensure hidden input fields have the correct variant value
       document.querySelectorAll('[name="variant"]').forEach(input => {
         input.value = variant.toUpperCase();
       });
 
-      // 4. Attach form submission handlers
+      // Attach form submission handlers
       document.querySelectorAll('form').forEach(form => {
         form.addEventListener('submit', function(e) {
           e.preventDefault();
@@ -672,23 +574,23 @@
         });
       });
 
-      // 5. "Other industry" toggler (Variant B only)
+      // "Other industry" toggler for Variant B only
       const industrySelect = document.getElementById('industry');
       const otherIndustryContainer = document.getElementById('other-industry-container');
       if (industrySelect && otherIndustryContainer) {
         industrySelect.addEventListener('change', function() {
           if (this.value === 'other') {
-            otherIndustryContainer.classList.remove('hidden');
+            otherIndustryContainer.classList.remove('d-none');
             document.getElementById('industry-other').required = true;
           } else {
-            otherIndustryContainer.classList.add('hidden');
+            otherIndustryContainer.classList.add('d-none');
             document.getElementById('industry-other').required = false;
           }
         });
       }
 
-      // 6. Track CTA clicks
-      document.querySelectorAll('.cta').forEach(cta => {
+      // Track CTA clicks on buttons and links
+      document.querySelectorAll('.btn, a').forEach(cta => {
         cta.addEventListener('click', function() {
           trackEvent('cta_click', {
             cta_text: this.textContent.trim(),
@@ -697,7 +599,26 @@
         });
       });
 
-      // (Optional) Additional tracking for scroll, field focus, etc. omitted.
+      // Scroll Depth Tracking (25%, 50%, 75%, 100%)
+      document.addEventListener('scroll', function() {
+        let scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+        if (scrollPercent >= 25 && !window.scrolled25) {
+          window.scrolled25 = true;
+          gtag('event', 'scroll_depth', { event_category: 'Engagement', event_label: '25%' });
+        }
+        if (scrollPercent >= 50 && !window.scrolled50) {
+          window.scrolled50 = true;
+          gtag('event', 'scroll_depth', { event_category: 'Engagement', event_label: '50%' });
+        }
+        if (scrollPercent >= 75 && !window.scrolled75) {
+          window.scrolled75 = true;
+          gtag('event', 'scroll_depth', { event_category: 'Engagement', event_label: '75%' });
+        }
+        if (scrollPercent >= 100 && !window.scrolled100) {
+          window.scrolled100 = true;
+          gtag('event', 'scroll_depth', { event_category: 'Engagement', event_label: '100%' });
+        }
+      });
     });
   </script>
 </body>
